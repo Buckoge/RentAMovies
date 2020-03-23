@@ -10,85 +10,85 @@ using RentAMovies.Models;
 
 namespace RentAMovies.Controllers
 {
-    public class MembershipTypesController : Controller
+    public class OrdersController : Controller
     {
         private readonly RentAMovieContext _context;
 
-        public MembershipTypesController(RentAMovieContext context)
+        public OrdersController(RentAMovieContext context)
         {
             _context = context;
         }
 
-        // GET: MembershipTypes
+        // GET: Orders
         public async Task<IActionResult> Index()
         {
-            return View(await _context.MembershipType.ToListAsync());
+            return View(await _context.Orders.ToListAsync());
         }
 
-        // GET: MembershipTypes/Details/5
-        public async Task<IActionResult> Details(byte? id)
+        // GET: Orders/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var membershipType = await _context.MembershipType
+            var order = await _context.Orders
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (membershipType == null)
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(membershipType);
+            return View(order);
         }
 
-        // GET: MembershipTypes/Create
+        // GET: Orders/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: MembershipTypes/Create
+        // POST: Orders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Id,SignUpFee,DurationInMonths,DiscountRate")] MembershipType membershipType)
+        public async Task<IActionResult> Create([Bind("Id,OrderDate,OrderNumber")] Order order)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(membershipType);
+                _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(membershipType);
+            return View(order);
         }
 
-        // GET: MembershipTypes/Edit/5
-        public async Task<IActionResult> Edit(byte? id)
+        // GET: Orders/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var membershipType = await _context.MembershipType.FindAsync(id);
-            if (membershipType == null)
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
             {
                 return NotFound();
             }
-            return View(membershipType);
+            return View(order);
         }
 
-        // POST: MembershipTypes/Edit/5
+        // POST: Orders/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(byte id, [Bind("Name,Id,SignUpFee,DurationInMonths,DiscountRate")] MembershipType membershipType)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,OrderDate,OrderNumber")] Order order)
         {
-            if (id != membershipType.Id)
+            if (id != order.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace RentAMovies.Controllers
             {
                 try
                 {
-                    _context.Update(membershipType);
+                    _context.Update(order);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MembershipTypeExists(membershipType.Id))
+                    if (!OrderExists(order.Id))
                     {
                         return NotFound();
                     }
@@ -113,41 +113,41 @@ namespace RentAMovies.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(membershipType);
+            return View(order);
         }
 
-        // GET: MembershipTypes/Delete/5
-        public async Task<IActionResult> Delete(byte? id)
+        // GET: Orders/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var membershipType = await _context.MembershipType
+            var order = await _context.Orders
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (membershipType == null)
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(membershipType);
+            return View(order);
         }
 
-        // POST: MembershipTypes/Delete/5
+        // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(byte id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var membershipType = await _context.MembershipType.FindAsync(id);
-            _context.MembershipType.Remove(membershipType);
+            var order = await _context.Orders.FindAsync(id);
+            _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MembershipTypeExists(byte id)
+        private bool OrderExists(int id)
         {
-            return _context.MembershipType.Any(e => e.Id == id);
+            return _context.Orders.Any(e => e.Id == id);
         }
     }
 }
