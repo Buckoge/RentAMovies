@@ -22,7 +22,8 @@ namespace RentAMovies.Controllers
         // GET: Movies
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Movies.ToListAsync());
+            var rentAMovieContext = _context.Movies.Include(m => m.Genre);
+            return View(await rentAMovieContext.ToListAsync());
         }
 
         // GET: Movies/Details/5
@@ -34,6 +35,7 @@ namespace RentAMovies.Controllers
             }
 
             var movie = await _context.Movies
+                .Include(m => m.Genre)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (movie == null)
             {
@@ -46,6 +48,7 @@ namespace RentAMovies.Controllers
         // GET: Movies/Create
         public IActionResult Create()
         {
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace RentAMovies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Category,MovieDescription,MovieDating")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Name,GenreId,MovieDescription,DateAdded,ReleaseDate,NumberInStock,NumberAvailable")] Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace RentAMovies.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", movie.GenreId);
             return View(movie);
         }
 
@@ -78,6 +82,7 @@ namespace RentAMovies.Controllers
             {
                 return NotFound();
             }
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", movie.GenreId);
             return View(movie);
         }
 
@@ -86,7 +91,7 @@ namespace RentAMovies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Category,MovieDescription,MovieDating")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,GenreId,MovieDescription,DateAdded,ReleaseDate,NumberInStock,NumberAvailable")] Movie movie)
         {
             if (id != movie.Id)
             {
@@ -113,6 +118,7 @@ namespace RentAMovies.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", movie.GenreId);
             return View(movie);
         }
 
@@ -125,6 +131,7 @@ namespace RentAMovies.Controllers
             }
 
             var movie = await _context.Movies
+                .Include(m => m.Genre)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (movie == null)
             {

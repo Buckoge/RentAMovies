@@ -32,8 +32,8 @@ namespace RentAMovies.Migrations
                     b.Property<bool>("IsSubscribedToNewsletter")
                         .HasColumnType("bit");
 
-                    b.Property<byte>("MembershipTypeId")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("MembershipTypeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -49,8 +49,10 @@ namespace RentAMovies.Migrations
 
             modelBuilder.Entity("RentAMovies.Models.Genre", b =>
                 {
-                    b.Property<byte>("Id")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -64,8 +66,10 @@ namespace RentAMovies.Migrations
 
             modelBuilder.Entity("RentAMovies.Models.MembershipType", b =>
                 {
-                    b.Property<byte>("Id")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<byte>("DiscountRate")
                         .HasColumnType("tinyint");
@@ -91,11 +95,11 @@ namespace RentAMovies.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("MovieDating")
+                    b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
 
                     b.Property<string>("MovieDescription")
                         .HasColumnType("nvarchar(max)");
@@ -103,57 +107,20 @@ namespace RentAMovies.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("NumberAvailable")
+                        .HasColumnType("int");
 
-                    b.ToTable("Movies");
-                });
+                    b.Property<int>("NumberInStock")
+                        .HasColumnType("int");
 
-            modelBuilder.Entity("RentAMovies.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("OrderDate")
+                    b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("OrderNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("GenreId");
 
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("RentAMovies.Models.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderItem");
+                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("RentAMovies.Models.Customer", b =>
@@ -165,22 +132,13 @@ namespace RentAMovies.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RentAMovies.Models.Order", b =>
+            modelBuilder.Entity("RentAMovies.Models.Movie", b =>
                 {
-                    b.HasOne("RentAMovies.Models.Customer", "User")
+                    b.HasOne("RentAMovies.Models.Genre", "Genre")
                         .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("RentAMovies.Models.OrderItem", b =>
-                {
-                    b.HasOne("RentAMovies.Models.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId");
-
-                    b.HasOne("RentAMovies.Models.Order", "Order")
-                        .WithMany("Items")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

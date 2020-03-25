@@ -38,17 +38,17 @@ namespace RentAMovies.Controllers
                 .Include(c => c.MembershipType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
-            { 
+            {
                 return NotFound();
             }
 
             return View(customer);
         }
 
-        // GET: /*Customers/Create*/
+        // GET: Customers/Create
         public IActionResult Create()
         {
-            ViewData["MembershipTypeId"] = new SelectList(_context.Set<MembershipType>(), "Id", "Name");
+            ViewData["MembershipTypeId"] = new SelectList(_context.MembershipType, "Id", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace RentAMovies.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MembershipTypeId"] = new SelectList(_context.Set<MembershipType>(), "Id", "Name", customer.MembershipTypeId);
+            ViewData["MembershipTypeId"] = new SelectList(_context.MembershipType, "Id", "Name", customer.MembershipTypeId);
             return View(customer);
         }
 
@@ -82,7 +82,7 @@ namespace RentAMovies.Controllers
             {
                 return NotFound();
             }
-            ViewData["MembershipTypeId"] = new SelectList(_context.Set<MembershipType>(), "Id", "Id", customer.MembershipTypeId);
+            ViewData["MembershipTypeId"] = new SelectList(_context.MembershipType, "Id", "Name", customer.MembershipTypeId);
             return View(customer);
         }
 
@@ -118,7 +118,7 @@ namespace RentAMovies.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MembershipTypeId"] = new SelectList(_context.Set<MembershipType>(), "Id", "Id", customer.MembershipTypeId);
+            ViewData["MembershipTypeId"] = new SelectList(_context.MembershipType, "Id", "Name", customer.MembershipTypeId);
             return View(customer);
         }
 
