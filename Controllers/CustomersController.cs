@@ -38,7 +38,7 @@ namespace RentAMovies.Controllers
                 .Include(c => c.MembershipType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
-            {
+            { 
                 return NotFound();
             }
 
@@ -48,7 +48,7 @@ namespace RentAMovies.Controllers
         // GET: /*Customers/Create*/
         public IActionResult Create()
         {
-            ViewData["MembershipTypeId"] = new SelectList(_context.Set<MembershipType>(), "Id", "Id");
+            ViewData["MembershipTypeId"] = new SelectList(_context.Set<MembershipType>(), "Id", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace RentAMovies.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MembershipTypeId"] = new SelectList(_context.Set<MembershipType>(), "Id", "Id", customer.MembershipTypeId);
+            ViewData["MembershipTypeId"] = new SelectList(_context.Set<MembershipType>(), "Id", "Name", customer.MembershipTypeId);
             return View(customer);
         }
 
