@@ -16,7 +16,6 @@ namespace RentAMovies.Data
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Movie> Movies { get; set; }
-        public DbSet<Order> Orders { get; set; }
         public DbSet<MembershipType> MembershipType { get; set; }
         public DbSet<Genre> Genres { get; set; }
     }

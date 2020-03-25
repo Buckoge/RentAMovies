@@ -13,8 +13,8 @@ namespace RentAMovies.Models
         [StringLength(255)]
         public string Name { get; set; }
         public bool IsSubscribedToNewsletter { get; set; }
+        public int MembershipTypeId { get; set; }
         public MembershipType MembershipType { get; set; }
-        public byte MembershipTypeId { get; set; }        
         public DateTime Birthdate { get; set; }
     }
 }

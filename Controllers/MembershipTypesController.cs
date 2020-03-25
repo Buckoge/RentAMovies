@@ -26,7 +26,7 @@ namespace RentAMovies.Controllers
         }
 
         // GET: MembershipTypes/Details/5
-        public async Task<IActionResult> Details(byte? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -54,7 +54,7 @@ namespace RentAMovies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Id,SignUpFee,DurationInMonths,DiscountRate")] MembershipType membershipType)
+        public async Task<IActionResult> Create([Bind("Id,Name,SignUpFee,DurationInMonths,DiscountRate")] MembershipType membershipType)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace RentAMovies.Controllers
         }
 
         // GET: MembershipTypes/Edit/5
-        public async Task<IActionResult> Edit(byte? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -86,7 +86,7 @@ namespace RentAMovies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(byte id, [Bind("Name,Id,SignUpFee,DurationInMonths,DiscountRate")] MembershipType membershipType)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SignUpFee,DurationInMonths,DiscountRate")] MembershipType membershipType)
         {
             if (id != membershipType.Id)
             {
@@ -117,7 +117,7 @@ namespace RentAMovies.Controllers
         }
 
         // GET: MembershipTypes/Delete/5
-        public async Task<IActionResult> Delete(byte? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -137,7 +137,7 @@ namespace RentAMovies.Controllers
         // POST: MembershipTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(byte id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var membershipType = await _context.MembershipType.FindAsync(id);
             _context.MembershipType.Remove(membershipType);
@@ -145,7 +145,7 @@ namespace RentAMovies.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MembershipTypeExists(byte id)
+        private bool MembershipTypeExists(int id)
         {
             return _context.MembershipType.Any(e => e.Id == id);
         }

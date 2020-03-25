@@ -26,7 +26,7 @@ namespace RentAMovies.Controllers
         }
 
         // GET: Genres/Details/5
-        public async Task<IActionResult> Details(byte? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -66,7 +66,7 @@ namespace RentAMovies.Controllers
         }
 
         // GET: Genres/Edit/5
-        public async Task<IActionResult> Edit(byte? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -86,7 +86,7 @@ namespace RentAMovies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(byte id, [Bind("Id,Name")] Genre genre)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Genre genre)
         {
             if (id != genre.Id)
             {
@@ -117,7 +117,7 @@ namespace RentAMovies.Controllers
         }
 
         // GET: Genres/Delete/5
-        public async Task<IActionResult> Delete(byte? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -137,7 +137,7 @@ namespace RentAMovies.Controllers
         // POST: Genres/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(byte id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var genre = await _context.Genres.FindAsync(id);
             _context.Genres.Remove(genre);
@@ -145,7 +145,7 @@ namespace RentAMovies.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GenreExists(byte id)
+        private bool GenreExists(int id)
         {
             return _context.Genres.Any(e => e.Id == id);
         }
