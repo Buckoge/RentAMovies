@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RentAMovies.Models
 {
     public class Customer
-    {
+    {   [Key]
         public int Id { get; set; }
         [Required]
         [StringLength(255)]
@@ -15,6 +15,7 @@ namespace RentAMovies.Models
         public bool IsSubscribedToNewsletter { get; set; }
         public int MembershipTypeId { get; set; }
         public MembershipType MembershipType { get; set; }
+        [Min18YearsIfAMember]
         public DateTime Birthdate { get; set; }
     }
 }
