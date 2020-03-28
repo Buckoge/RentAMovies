@@ -12,9 +12,10 @@ namespace RentAMovies.Models
         {
             var customer = (Customer)validationContext.ObjectInstance;
 
-            if (customer.MembershipTypeId == 1)
+            if (customer.MembershipTypeId == MembershipType.Unknow ||
+                customer.MembershipTypeId == MembershipType.PayAsyouGo)
                 return ValidationResult.Success;
-
+             
             if (customer.Birthdate == null)
                 return new ValidationResult("Birthdate is required.");
 
