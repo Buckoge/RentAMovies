@@ -1,4 +1,4 @@
-﻿  using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,9 +12,9 @@ namespace RentAMovies.Controllers
 {
     public class CustomersController : Controller
     {
-        private readonly RentAMovieContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public CustomersController(RentAMovieContext context)
+        public CustomersController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -22,8 +22,8 @@ namespace RentAMovies.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            var rentAMovieContext = _context.Customers.Include(c => c.MembershipType);
-            return View(await rentAMovieContext.ToListAsync());
+            var applicationDbContext = _context.Customers.Include(c => c.MembershipType);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Customers/Details/5

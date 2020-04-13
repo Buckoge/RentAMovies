@@ -12,9 +12,9 @@ namespace RentAMovies.Controllers
 {
     public class RentalsController : Controller
     {
-        private readonly RentAMovieContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public RentalsController(RentAMovieContext context)
+        public RentalsController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -22,8 +22,8 @@ namespace RentAMovies.Controllers
         // GET: Rentals
         public async Task<IActionResult> Index()
         {
-            var rentAMovieContext = _context.Rentals.Include(r => r.Customer).Include(r => r.Movie);
-            return View(await rentAMovieContext.ToListAsync());
+            var applicationDbContext = _context.Rentals.Include(r => r.Customer).Include(r => r.Movie);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Rentals/Details/5
@@ -34,9 +34,9 @@ namespace RentAMovies.Controllers
                 return NotFound();
             }
 
-            var rental = await _context.Rentals
-                .Include(r => r.Customer)
-                .Include(r => r.Movie)
+            var rental = await _context.Movies
+                .Include(r => r.Id)
+                .Where(s => s.Id == id)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (rental == null)
             {
@@ -63,11 +63,16 @@ namespace RentAMovies.Controllers
         {
             var movies = _context.Movies.ToList();
 
-            
             if (ModelState.IsValid)
             {
                 foreach (var movie in movies)
-                movie.NumberAvailable--;
+                {
+
+                    if (movie.NumberAvailable == 0)
+                        return BadRequest("Nema na stanju");
+
+                    movie.NumberAvailable--;
+                }
 
                 _context.Add(rental);
                 await _context.SaveChangesAsync();
@@ -81,6 +86,7 @@ namespace RentAMovies.Controllers
         // GET: Rentals/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();

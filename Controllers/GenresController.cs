@@ -12,9 +12,9 @@ namespace RentAMovies.Controllers
 {
     public class GenresController : Controller
     {
-        private readonly RentAMovieContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public GenresController(RentAMovieContext context)
+        public GenresController(ApplicationDbContext context)
         {
             _context = context;
         }

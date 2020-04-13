@@ -12,9 +12,9 @@ namespace RentAMovies.Controllers
 {
     public class MoviesController : Controller
     {
-        private readonly RentAMovieContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public MoviesController(RentAMovieContext context)
+        public MoviesController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -22,8 +22,8 @@ namespace RentAMovies.Controllers
         // GET: Movies
         public async Task<IActionResult> Index()
         {
-            var rentAMovieContext = _context.Movies.Include(m => m.Genre);
-            return View(await rentAMovieContext.ToListAsync());
+            var applicationDbContext = _context.Movies.Include(m => m.Genre);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Movies/Details/5

@@ -12,9 +12,9 @@ namespace RentAMovies.Controllers
 {
     public class MembershipTypesController : Controller
     {
-        private readonly RentAMovieContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public MembershipTypesController(RentAMovieContext context)
+        public MembershipTypesController(ApplicationDbContext context)
         {
             _context = context;
         }

@@ -8,7 +8,7 @@ namespace RentAMovies.Models
     public class NewRental
     {
         public int CustomerId { get; set; }
-        public List<int> MovieIDs { get; set; }
+        public List<Movie> Movies { get; set; }
     }
     
 }

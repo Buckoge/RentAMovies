@@ -8,42 +8,46 @@ using RentAMovies.Models;
 
 namespace RentAMovies.Controllers
 {
-    public class NewRentalsController : Controller
+    public class NewRentalsController
     {
-        private readonly RentAMovieContext _context;
+        private ApplicationDbContext _context;
 
-        public NewRentalsController(RentAMovieContext context)
+        public NewRentalsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         [HttpPost]
-        public IActionResult CreateNewRentals(NewRental _newRental)
+        public Task<IActionResult> CreateNewRentals(NewRental newRental)
         {
-            var customer = _context.Customers.Single(
-                c => c.Id == _newRental.CustomerId);
-            
-            var movies = _context.Movies.Where(
-                m => _newRental.MovieIDs.Contains(m.Id)).ToList();
-            
-            foreach (var movie in movies)
-            {
-                if (movie.NumberAvailable == 0)
-                    return BadRequest("movie is not available.");
+           
+                var customer = _context.Customers.Single(
+                c => c.Id == newRental.CustomerId);
 
-                movie.NumberAvailable--;
+                var movies = _context.Movies.Where(
+                    m => newRental.MovieIDs.Contains(m.Id)).ToList();
 
-                var rental = new Rental
+                foreach (var movie in movies)
                 {
-                    Customer = customer,
-                    Movie = movie,
-                    DateRented = DateTime.Now
-                };
-                _context.Rentals.Add(rental);
-            }
-            _context.SaveChanges();
-            return View(_newRental);
+                    // if (movie.NumberAvailable == 0)
+                    //      return BadRequestResult("Movie is not available.");
+
+                    movie.NumberAvailable--;
+
+                    var rental = new Rental
+                    {
+                        Customer = customer,
+                        Movie = movie,
+                        DateRented = DateTime.Now
+                    };
+
+                    _context.Rentals.Add(rental);
+                }
+
+                _context.SaveChanges();
+            
+                return OkResult(newRental);
+            
         }
     }
-    
 }*/
