@@ -9,8 +9,8 @@ using RentAMovies.Data;
 namespace RentAMovies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200410151723_rental2777")]
-    partial class rental2777
+    [Migration("20200413111854_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -308,14 +308,9 @@ namespace RentAMovies.Migrations
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("RentalId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("GenreId");
-
-                    b.HasIndex("RentalId");
 
                     b.ToTable("Movies");
                 });
@@ -329,6 +324,9 @@ namespace RentAMovies.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<DateTime>("DateRented")
                         .HasColumnType("datetime(6)");
 
@@ -337,6 +335,9 @@ namespace RentAMovies.Migrations
 
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
 
@@ -414,16 +415,12 @@ namespace RentAMovies.Migrations
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("RentAMovies.Models.Rental", null)
-                        .WithMany("Movies")
-                        .HasForeignKey("RentalId");
                 });
 
             modelBuilder.Entity("RentAMovies.Models.Rental", b =>
                 {
                     b.HasOne("RentAMovies.Models.Customer", "Customer")
-                        .WithMany("Rentals")
+                        .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

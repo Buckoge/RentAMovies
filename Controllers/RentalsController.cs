@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Razor.Language;
 using Microsoft.EntityFrameworkCore;
 using RentAMovies.Data;
 using RentAMovies.Models;
@@ -22,6 +24,7 @@ namespace RentAMovies.Controllers
         // GET: Rentals
         public async Task<IActionResult> Index()
         {
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
             var applicationDbContext = _context.Rentals.Include(r => r.Customer).Include(r => r.Movie);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -34,9 +37,9 @@ namespace RentAMovies.Controllers
                 return NotFound();
             }
 
-            var rental = await _context.Movies
-                .Include(r => r.Id)
-                .Where(s => s.Id == id)
+            var rental = await _context.Rentals
+                .Include(r => r.Customer)
+                .Include(r => r.Movie)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (rental == null)
             {
@@ -49,8 +52,9 @@ namespace RentAMovies.Controllers
         // GET: Rentals/Create
         public IActionResult Create()
         {
+           
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name");
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id");
             return View();
         }
 
@@ -59,34 +63,22 @@ namespace RentAMovies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CustomerId,MovieId,DateRented,DateReturned")] Rental rental, NewRental newRental)
+        public async Task<IActionResult> Create([Bind("Id,DateCreated,CustomerId,MovieId,Status,DateRented,DateReturned")] Rental rental)
         {
-            var movies = _context.Movies.ToList();
-
             if (ModelState.IsValid)
             {
-                foreach (var movie in movies)
-                {
-
-                    if (movie.NumberAvailable == 0)
-                        return BadRequest("Nema na stanju");
-
-                    movie.NumberAvailable--;
-                }
-
                 _context.Add(rental);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", rental.CustomerId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name", rental.MovieId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", rental.MovieId);
             return View(rental);
         }
 
         // GET: Rentals/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-
             if (id == null)
             {
                 return NotFound();
@@ -98,7 +90,7 @@ namespace RentAMovies.Controllers
                 return NotFound();
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", rental.CustomerId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name", rental.MovieId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", rental.MovieId);
             return View(rental);
         }
 
@@ -107,7 +99,7 @@ namespace RentAMovies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerId,MovieId,DateRented,DateReturned")] Rental rental)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DateCreated,CustomerId,MovieId,Status,DateRented,DateReturned")] Rental rental)
         {
             if (id != rental.Id)
             {
@@ -135,7 +127,7 @@ namespace RentAMovies.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", rental.CustomerId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name", rental.MovieId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", rental.MovieId);
             return View(rental);
         }
 
