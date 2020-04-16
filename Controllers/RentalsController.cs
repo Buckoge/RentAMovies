@@ -50,30 +50,28 @@ namespace RentAMovies.Controllers
         }
 
         // GET: Rentals/Create
-        public IActionResult Create()
-        {
-           
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id");
-            return View();
-        }
+        //public IActionResult Create()
+        //{
+        //   
+        //    ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
+        //    ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id");
+        //    return View();
+        //}
 
         // POST: Rentals/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DateCreated,CustomerId,MovieId,Status,DateRented,DateReturned")] Rental rental)
+        public async Task<IActionResult> Create([Bind("Id,DateCreated,CustomerId,MovieId,Status,DateRented,DateReturned")] int CustomerId)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(rental);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", rental.CustomerId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", rental.MovieId);
-            return View(rental);
+
+            //    _context.Add(rental);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name");
+            return View();
         }
 
         // GET: Rentals/Edit/5

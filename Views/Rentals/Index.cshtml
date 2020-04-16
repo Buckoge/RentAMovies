@@ -5,9 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.DropDownList("CustomerId", null, "---Select Customer---")
-<a asp-action="Create">Create New Rental</a>
 
+@using (Html.BeginForm("Create", "Rentals", FormMethod.Post))
+{
+    <p>
+        Title: @Html.DropDownList("CustomerId", null, "---Select Customer---") <br />
+        <input type="submit" value="New rental" />
+    </p>
+}
 
 
 <table class="table">
