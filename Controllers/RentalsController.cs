@@ -64,6 +64,7 @@ namespace RentAMovies.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([Bind("Id,DateCreated,CustomerId,MovieId,Status,DateRented,DateReturned")] int CustomerId)
         {
+            var model = new Rental { DateCreated = DateTime.Now };
             
             //    _context.Add(rental);
             //    await _context.SaveChangesAsync();
@@ -71,7 +72,7 @@ namespace RentAMovies.Controllers
 
             ViewData["CustomerId"] = _context.Customers.First(c => c.Id == CustomerId);
             ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name");
-            return View();
+            return View(model);
         }
 
         // GET: Rentals/Edit/5
