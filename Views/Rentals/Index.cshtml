@@ -9,7 +9,7 @@
 @using (Html.BeginForm("Create", "Rentals", FormMethod.Post))
 {
     <p>
-        Title: @Html.DropDownList("CustomerId", null, "---Select Customer---") <br />
+        @Html.DropDownList("CustomerId", null, "---Select Customer---") 
         <input type="submit" value="New rental" />
     </p>
 }

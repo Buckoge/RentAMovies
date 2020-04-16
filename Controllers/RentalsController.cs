@@ -64,12 +64,12 @@ namespace RentAMovies.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([Bind("Id,DateCreated,CustomerId,MovieId,Status,DateRented,DateReturned")] int CustomerId)
         {
-
+            
             //    _context.Add(rental);
             //    await _context.SaveChangesAsync();
             //    return RedirectToAction(nameof(Index));
-            
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
+
+            ViewData["CustomerId"] = _context.Customers.First(c => c.Id == CustomerId);
             ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name");
             return View();
         }
