@@ -20,8 +20,7 @@ namespace RentAMovies.Controllers
         {
             _context = context;
         }
-
-        // GET: Rentals
+        
         public async Task<IActionResult> Index()
         {
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
@@ -29,7 +28,7 @@ namespace RentAMovies.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Rentals/Details/5
+    
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,20 +47,8 @@ namespace RentAMovies.Controllers
 
             return View(rental);
         }
-
-        // GET: Rentals/Create
-        //public IActionResult Create()
-        //{
-        //   
-        //    ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
-        //    ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id");
-        //    return View();
-        //}
-
-        // POST: Rentals/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        
+        [HttpGet]
         public async Task<IActionResult> Create([Bind("Id,DateCreated,CustomerId,MovieId,Status,DateRented,DateReturned")] int CustomerId)
         {
             var model = new Rental { DateCreated = DateTime.Now };
@@ -70,12 +57,12 @@ namespace RentAMovies.Controllers
             //    await _context.SaveChangesAsync();
             //    return RedirectToAction(nameof(Index));
 
-            ViewData["CustomerId"] = _context.Customers.First(c => c.Id == CustomerId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name");
+            ViewData["Customer"] = _context.Customers.First(c => c.Id == CustomerId);
+            ViewData["MoviesSelectList"] = new SelectList(_context.Movies, "Id", "Name");
             return View(model);
         }
 
-        // GET: Rentals/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -92,10 +79,7 @@ namespace RentAMovies.Controllers
             ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", rental.MovieId);
             return View(rental);
         }
-
-        // POST: Rentals/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,DateCreated,CustomerId,MovieId,Status,DateRented,DateReturned")] Rental rental)
@@ -130,7 +114,6 @@ namespace RentAMovies.Controllers
             return View(rental);
         }
 
-        // GET: Rentals/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -150,7 +133,6 @@ namespace RentAMovies.Controllers
             return View(rental);
         }
 
-        // POST: Rentals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

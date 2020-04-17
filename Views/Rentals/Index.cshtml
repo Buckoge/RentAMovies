@@ -6,7 +6,7 @@
 }
 
 
-@using (Html.BeginForm("Create", "Rentals", FormMethod.Post))
+@using (Html.BeginForm("Create", "Rentals", FormMethod.Get))
 {
     <p>
         @Html.DropDownList("CustomerId", null, "---Select Customer---") 

@@ -5,10 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+@{
+    var customer = ViewData["Customer"] as Customer;
+}
 <h1>Create new rental for</h1>
-<div>
-    <h2>@ViewBag.CustomerId.Name</h2>  
-</div>
+<h2>@customer.Name</h2>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,15 +21,6 @@
                 <label asp-for="DateCreated" class="control-label"></label>
                 <input asp-for="DateCreated" class="form-control" />
                 <span asp-validation-for="DateCreated" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MovieId" class="control-label"></label>
-                <select asp-for="MovieId" class="form-control" asp-items="ViewBag.MovieId"></select>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
-                </label>
             </div>
             <div class="form-group">
                 <label asp-for="DateRented" class="control-label"></label>
@@ -39,6 +33,12 @@
                 <span asp-validation-for="DateReturned" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="MovieId" class="control-label"></label>
+                <select asp-for="MovieId" class="form-control" asp-items="ViewBag.MoviesSelectList"></select>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Add movie" class="btn btn-primary" />           
+            
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
