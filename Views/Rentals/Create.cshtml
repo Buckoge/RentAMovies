@@ -8,10 +8,10 @@
 
 @{
     var customer = ViewData["Customer"] as Customer;
+    var Movie = ViewData["MoviesSelectList"] as Movie;
 }
 <h1>Create new rental for</h1>
 <h2>@customer.Name</h2>
-
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -28,22 +28,26 @@
                 <span asp-validation-for="DateRented" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateReturned" class="control-label"></label>
-                <input asp-for="DateReturned" class="form-control" />
-                <span asp-validation-for="DateReturned" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="MovieId" class="control-label"></label>
-                <select asp-for="MovieId" class="form-control" asp-items="ViewBag.MoviesSelectList"></select>
+                <select asp-for="MovieId" class="form-control" id="movie" asp-items="ViewBag.MoviesSelectList"></select>
             </div>
             <div class="form-group">
-                <input type="button" value="Add movie" class="btn btn-primary" />           
-            
+                <input type="button" value="Add movie" class="btn btn-primary" id="myBtn" />
+
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+
+
+
+<div id="myDiv">
+    <h2> Selected movies:</h2>
+</div>
+
+
+
 
 <div>
     <a asp-action="Index">Back to List</a>
@@ -51,4 +55,47 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script></script>
+    <!-- JS includes -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.min.js"></script>
+
+    <script type="text/javascript">
+        //javascript get movie text value and append row
+
+        /*function myFunction() {
+            var para = document.createElement("p");
+            var avaiable = document.getElementById("film");
+            var selectedValue = avaiable.options[avaiable.selectedIndex].text;
+            para.innerHTML = selectedValue
+            document.getElementById("myDIV").appendChild(para);
+        }*/
+    
+        //jquery get movie text value and append row
+        $(function () {            
+           
+            $(document).on('click', '.remove', function () {
+                $(this).parents('tr').remove();
+            });            
+        });
+
+
+        $(document).ready(function () {
+            $("#myBtn").click(function () {
+                var SelectedMovie = $("#movie option:selected").text();
+                var html = '<tr><td><input type="" name="name" value="' + SelectedMovie + '"></td><td><button class="remove">X</button></td></tr>';
+                $('#myDiv').append(html);
+            });
+        });
+
+
+
+    </script>
+
+
+
 }
