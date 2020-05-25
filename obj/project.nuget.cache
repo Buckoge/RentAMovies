@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "3ciuSlYk1BmgzQbqseNwZsSnqqUlcA6/VaPPUPSst/bwxUPkEQWRLFYgEUETiggwlPkz0dlZost7CCwfvnnsQw==",
+  "dgSpecHash": "v18Pm8IrKpcuBU4V+NbMcQ9Zyi7NmLbHhh85xeQ5CzhV+/P/ahmFFt1HLhWiroGHgWp4YNbHrJDoPJ/1irQKFw==",
   "success": true,
   "projectFilePath": "D:\\ucenje\\!CSharpProjekti\\RentAMovies\\RentAMovies\\RentAMovies.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,8 @@
     "C:\\Users\\Lana\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Lana\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\3.0.0\\microsoft.aspnetcore.identity.entityframeworkcore.3.0.0.nupkg.sha512",
     "C:\\Users\\Lana\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\3.0.0\\microsoft.aspnetcore.identity.ui.3.0.0.nupkg.sha512",
+    "C:\\Users\\Lana\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.extensions\\3.0.0\\microsoft.aspnetcore.mvc.razor.extensions.3.0.0.nupkg.sha512",
+    "C:\\Users\\Lana\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.runtimecompilation\\3.0.0\\microsoft.aspnetcore.mvc.razor.runtimecompilation.3.0.0.nupkg.sha512",
     "C:\\Users\\Lana\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "C:\\Users\\Lana\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\3.0.0\\microsoft.aspnetcore.razor.language.3.0.0.nupkg.sha512",
     "C:\\Users\\Lana\\.nuget\\packages\\microsoft.aspnetcore.razor.runtime\\2.2.0\\microsoft.aspnetcore.razor.runtime.2.2.0.nupkg.sha512",

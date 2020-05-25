@@ -17,6 +17,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@customer.Id" />
             <div class="form-group">
                 <label asp-for="DateCreated" class="control-label"></label>
                 <input asp-for="DateCreated" class="form-control" />
@@ -34,16 +35,29 @@
             <div class="form-group">
                 <input type="button" value="Add movie" class="btn btn-primary" id="myBtn" />
 
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" asp-controller="Rentals" asp-action="Create" asp-route-id="@customer.Id" method="post" id="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 
+<div class="col-12" style="text-align:center">
+    <br />
+    <span class="h3 text-info">OR</span>
+    <br /><br />
+</div>
+<div class="col-12 border p-3">
 
-<div id="myDiv">
-    <h2> Selected movies:</h2>
+    <table id="DT_load" class="table table-striped border table-hover table-light" style="width:100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+    </table>
 </div>
 
 
@@ -74,28 +88,65 @@
             para.innerHTML = selectedValue
             document.getElementById("myDIV").appendChild(para);
         }*/
-    
+
         //jquery get movie text value and append row
-        $(function () {            
-           
+        $(function () {
+
             $(document).on('click', '.remove', function () {
                 $(this).parents('tr').remove();
-            });            
+            });
         });
 
 
         $(document).ready(function () {
             $("#myBtn").click(function () {
-                var SelectedMovie = $("#movie option:selected").text();
-                var html = '<tr><td><input type="" name="name" value="' + SelectedMovie + '"></td><td><button class="remove">X</button></td></tr>';
-                $('#myDiv').append(html);
-            });
+                var SelectedMovieId = $("#movie option:selected").index()+1;
+                var SelectedMovieName = $("#movie option:selected").text();
+                var html = '<tr class="movieid"><td>' + SelectedMovieId + '</td><td>' + SelectedMovieName + '</td><td><button class="remove">-</button></td></tr>';
+                $('#DT_load').append(html);
+            });           
         });
+     /*   $(document).ready(function () {
+            $('#submit').click(function (e) {
+                var SelectedMovieId = $("#movie option:selected").index() + 1;
+                var customer = getUrlParameter('CustomerId');
+                $.ajax({
+                    url: 'Rental/AddRow',
+                    data: customer + SelectedMovieId.serializeArray(),
+                    //  data: $("#movie option:selected").index().serializeArray(),
+                    type: 'POST',
+                });
+            });
+        }); */
+
+       
+        $("#submit").click(function () {
+            var inputs = new Array();
+            $("movieid").each(function () {
+                var tr_inputs = new Array();
+                $(this).find("DT_load").each(function () {
+                    tr_inputs[$(this).attr("Id")] = $(this).val();
+                });
+                inputs.push(tr_inputs);
+            });
+
+                $.ajax({
+                    type: "POST",
+                    url: '/RentalTests/Create',     //your action
+                    data: $(tr_inputs).serialize(),   //your form name.it takes all the values of model               
+                    dataType: 'json',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                })
+                return false;
+            });
+
+
 
 
 
     </script>
-
-
+    
 
 }

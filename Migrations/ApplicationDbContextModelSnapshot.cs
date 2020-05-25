@@ -346,6 +346,39 @@ namespace RentAMovies.Migrations
                     b.ToTable("Rentals");
                 });
 
+            modelBuilder.Entity("RentAMovies.Models.VideoKlub", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DateRented")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("DateReturned")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("VideoKlub");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -416,6 +449,21 @@ namespace RentAMovies.Migrations
                 });
 
             modelBuilder.Entity("RentAMovies.Models.Rental", b =>
+                {
+                    b.HasOne("RentAMovies.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RentAMovies.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RentAMovies.Models.VideoKlub", b =>
                 {
                     b.HasOne("RentAMovies.Models.Customer", "Customer")
                         .WithMany()
