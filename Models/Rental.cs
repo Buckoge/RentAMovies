@@ -14,7 +14,7 @@ namespace RentAMovies.Models
         public Customer Customer { get; set; }
         [Display(Name = "Movie name")]
         public int MovieId { get; set; }
-        public Movie Movie { get; set; }
+        public Movie? Movie { get; set; }
         public bool Status { get; set; }
         public DateTime DateRented { get; set; }
         public DateTime? DateReturned { get; set; }

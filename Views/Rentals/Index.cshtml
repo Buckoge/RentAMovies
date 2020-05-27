@@ -9,11 +9,12 @@
 @using (Html.BeginForm("Create", "Rentals", FormMethod.Get))
 {
     <p>
-        @Html.DropDownList("CustomerId", null, "---Select Customer---") 
+        @Html.DropDownList("CustomerId", null, "---Select Customer---")
         <input type="submit" value="New rental" />
     </p>
 }
 
+<h1>Index</h1>
 
 <table class="table">
     <thead>
@@ -50,7 +51,7 @@
                     @Html.DisplayFor(modelItem => item.Customer.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Movie.Id)
+                    @Html.DisplayFor(modelItem => item.Movie.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)

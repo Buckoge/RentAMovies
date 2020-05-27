@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.Language;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RentAMovies.Data;
+using RentAMovies.Migrations;
 using RentAMovies.Models;
 
 namespace RentAMovies.Controllers
@@ -47,7 +49,27 @@ namespace RentAMovies.Controllers
 
             return View(rental);
         }
-        
+        [HttpPost]
+        public async Task<IActionResult> Create(int Id, [FromBody]Rental rentals)
+        {
+
+           // var customer1 = await _context.Customers.FindAsync(Id);
+            rentals.CustomerId = Id;
+
+
+            //  await _context.Rentals.Include(s => s.Customer).FirstOrDefaultAsync(m => m.Id == Id);
+            // if (customerFromDb == null)
+            // {
+            //      return Json(new { success = false, message = "Error while Deleting" });
+            //  }
+            _context.Add(rentals);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+          
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> Create([Bind("Id,DateCreated,CustomerId,MovieId,Status,DateRented,DateReturned")] int CustomerId)
         {
@@ -63,6 +85,7 @@ namespace RentAMovies.Controllers
         }
 
         
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,7 +99,7 @@ namespace RentAMovies.Controllers
                 return NotFound();
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", rental.CustomerId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", rental.MovieId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name", rental.MovieId);
             return View(rental);
         }
         
@@ -110,7 +133,7 @@ namespace RentAMovies.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", rental.CustomerId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", rental.MovieId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name", rental.MovieId);
             return View(rental);
         }
 
