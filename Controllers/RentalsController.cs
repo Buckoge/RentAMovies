@@ -50,19 +50,21 @@ namespace RentAMovies.Controllers
             return View(rental);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(int Id, [FromBody]Rental rentals)
+        public async Task<IActionResult> Create(List<Rental> movies)
         {
 
-           // var customer1 = await _context.Customers.FindAsync(Id);
-            rentals.CustomerId = Id;
+            //Check for NULL.
+            if (movies == null)
+            {
+                movies = new List<Rental>();
+            }
 
-
-            //  await _context.Rentals.Include(s => s.Customer).FirstOrDefaultAsync(m => m.Id == Id);
-            // if (customerFromDb == null)
-            // {
-            //      return Json(new { success = false, message = "Error while Deleting" });
-            //  }
-            _context.Add(rentals);
+            //Loop and insert records.
+            foreach (Rental movie in movies)
+            {
+                _context.Add(movie);
+            }
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
