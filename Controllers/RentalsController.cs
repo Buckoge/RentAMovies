@@ -50,19 +50,19 @@ namespace RentAMovies.Controllers
             return View(rental);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(List<Rental> movies)
+        public async Task<IActionResult> Create(List<Rental> rentals)
         {
 
             //Check for NULL.
-            if (movies == null)
+            if (rentals == null)
             {
-                movies = new List<Rental>();
+                rentals = new List<Rental>();
             }
 
             //Loop and insert records.
-            foreach (Rental movie in movies)
+            foreach (Rental rental in rentals)
             {
-                _context.Add(movie);
+                _context.Add(rental);
             }
             
             await _context.SaveChangesAsync();

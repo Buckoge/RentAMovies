@@ -54,7 +54,7 @@
 
 <body>
     <div class="col-12 border p-3">
-        <table id="DT_load" class="table table-striped border table-hover table-light" style="width:100%">
+        <table id="tblMovies" class="table table-striped border table-hover table-light" style="width:100%">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -68,20 +68,23 @@
 
 
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-        <script></script>
-        <!-- JS includes -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script></script>
+    <!-- JS includes -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-        <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-        <script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="//ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+    
 
         <script type="text/javascript">
 
@@ -89,77 +92,78 @@
                 $(document).on('click', '.remove', function () {
                     $(this).parents('tr').remove();
                 });
-            });
+                });
 
 
-            $(document).ready(function () {
+                $(document).ready(function () {
                 $("#myBtn").click(function () {
                     var SelectedMovieId = $("#movie option:selected").index() + 1;
                     var SelectedMovieName = $("#movie option:selected").text();
-                    var html = '<tbody><tr class="movieid"><td>' + SelectedMovieId + '</td><td>' + SelectedMovieName + '</td><td><button class="remove">-</button></td></tr></tbody>';
-                    $('#DT_load').append(html);
+                    var html = '<tbody><tr><td id="MovieId">' + SelectedMovieId + '</td><td id="Movie">' + SelectedMovieName + '</td><td><button class="remove">-</button></td></tr></tbody>';
+                    $('#tblMovies').append(html);
                 });
-            });
-
-            $("body").on("click", "#btnPost", function () {
-                //Loop through the Table rows and build a JSON array.
-
-                var movies = new Array();
-                $("#DT_load TBODY TR").each(function () {
-                    var row = $(this);
-                    var movie = {};
-                    movie.Id = row.find("TD").eq(0).html();
-                    movie.Name = row.find("TD").eq(1).html();
-                    movies.push(movie);
                 });
 
-                //Send the JSON array to Controller using AJAX.
+                $("body").on("click", "#btnPost", function () {
+                    //Loop through the Table rows and build a JSON array.
+
+                    var rentals = new Array();
+                    $("#tblMovies TBODY TR").each(function () {
+                        var row = $(this);
+                        var rental = {};
+                        rental.MovieId = row.find("TD").eq(0).html();
+                        rental.movie = row.find("TD").eq(1).html();
+                        rentals.push(rental);
+                    });
+                    console.log(rentals);
+
+                    //Send the JSON array to Controller using AJAX.
+                    $.ajax({
+                type: "POST",
+                        url: "/Rentals/Create",
+                        data: JSON.stringify(rentals),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (r) {
+                alert(r + " record(s) inserted.");
+                        }
+                    });
+                });
+
+
+                /*  $("#btnPost").click(function () {
+                // var rental = new Object();
+                movieId = $("#movie option:selected").index() + 1;
+                      //rental.movieName = $("#movie option:selected").text();
+                     // if (rental != null) {
                 $.ajax({
                     type: "POST",
                     url: "/Rentals/Create",
-                    data: JSON.stringify(movies),
-                    contentType: "application/json; charset=utf-8",
+                    data: { "customer": $("#customer").val(), "DateCreated": $("#DateCreated").val(), "DateRented": $("#DateRented").val(), "MovieId": $("#DT_load").val() },
+                    //  contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function (r) {
-                        alert(r + " record(s) inserted.");
+                    success: function (response) {
+                        if (response != null) {
+                            alert("Name : " + rental.movieName);
+                        } else {
+                            alert("Something went wrong");
+                        }
+                    },
+                    failure: function (response) {
+                        alert("gegegeg");
+                    },
+                    error: function (response) {
+                        alert("buccucuc");
                     }
                 });
-            });
-
-
-            /*  $("#btnPost").click(function () {
-                 // var rental = new Object();
-                 movieId = $("#movie option:selected").index() + 1;
-                  //rental.movieName = $("#movie option:selected").text();
-                 // if (rental != null) {
-                      $.ajax({
-                          type: "POST",
-                          url: "/Rentals/Create",
-                          data: { "customer": $("#customer").val(), "DateCreated": $("#DateCreated").val(), "DateRented": $("#DateRented").val(), "MovieId": $("#DT_load").val() },
-                        //  contentType: "application/json; charset=utf-8",
-                          dataType: "json",
-                          success: function (response) {
-                              if (response != null) {
-                                  alert("Name : " + rental.movieName);
-                              } else {
-                                  alert("Something went wrong");
-                              }
-                          },
-                          failure: function (response) {
-                              alert("gegegeg");
-                          },
-                          error: function (response) {
-                              alert("buccucuc");
-                          }
-                      });
-                //  }
-              });  */
+                    //  }
+                  });  */
 
 
 
 
 
-        </script>
+    </script>
 
 
-    }
+}
