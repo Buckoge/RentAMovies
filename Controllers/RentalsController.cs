@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.Language;
 using Microsoft.EntityFrameworkCore;
@@ -62,7 +63,7 @@ namespace RentAMovies.Controllers
             //Loop and insert records.
             foreach (Rental rental in rentals)
             {
-                _context.Add(rental);
+                _context.Add(rentals);
             }
             
             await _context.SaveChangesAsync();
@@ -75,7 +76,7 @@ namespace RentAMovies.Controllers
         [HttpGet]
         public async Task<IActionResult> Create([Bind("Id,DateCreated,CustomerId,MovieId,Status,DateRented,DateReturned")] int CustomerId)
         {
-            var model = new Rental { DateCreated = DateTime.Now };
+            //var model = new Rental { DateCreated = DateTime.Now };
             
             //    _context.Add(rental);
             //    await _context.SaveChangesAsync();
@@ -83,7 +84,7 @@ namespace RentAMovies.Controllers
 
             ViewData["Customer"] = _context.Customers.First(c => c.Id == CustomerId);
             ViewData["MoviesSelectList"] = new SelectList(_context.Movies, "Id", "Name");
-            return View(model);
+            return View();
         }
 
         
