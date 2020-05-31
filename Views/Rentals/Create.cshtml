@@ -10,6 +10,13 @@
     var customer = ViewData["Customer"] as Customer;
     var Movie = ViewData["MoviesSelectList"] as Movie;
 }
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+
 <h1>Create new rental for</h1>
 <h2>@customer.Name</h2>
 <hr />
@@ -37,10 +44,10 @@
                 <input asp-for="DateReturned" class="form-control" id="DateReturned" />
                 <span asp-validation-for="DateReturned" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="myDiv">
                 <input type="button" value="Add movie" class="btn btn-primary" id="myBtn" />
 
-                <input type="button" asp-controller="Rentals" id="btnPost" value="Create" class="btn btn-primary" />
+                <input type="button" id="btnPost" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -98,7 +105,8 @@
             });
         });
 
-        $("body").on("click", "#btnPost", function () {
+
+        $('#myDiv').on("click", "#btnPost", function () {
 
             //Loop through the Table rows and build a JSON array.
             var rentals = [];
@@ -106,28 +114,35 @@
                 var url = document.URL;
                 var id = url.substring(url.lastIndexOf('=') + 1);
                 var row = $(this);
-                rentals.push({                    
+                rentals.push({
                     DateCreated: document.getElementById("DateCreated").value,
                     CustomerId: id,
                     MovieId: row.find("TD").eq(0).html(),
-                    Status: "",
+                    Status: "0",
                     DateRented: document.getElementById("DateRented").value,
                     DateReturned: document.getElementById("DateReturned").value
-                }
-                );
+                });
             });
 
             //Send the JSON array to Controller using AJAX.
-            rentals = JSON.stringify({ 'rentals': rentals }); //for test
-            alert(rentals)
+            rentals = JSON.stringify({ 'rentals': rentals });
+            console.log(rentals);
+
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
             $.ajax({
                 type: "POST",
-                url: "/Rentals/Create",
+                traditional: true,
+                headers:
+                {
+                    "RequestVerificationToken": token
+                },
+                url: "/Rentals/CreateRental",
                 data: rentals,
-                contentType: "application/json; charset=utf-8",
+                content: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (r) {
-                    alert(r + " record(s) inserted.");
+                    alert(r.rentals + " record(s) inserted.");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(xhr.status);
@@ -135,53 +150,6 @@
                 }
             });
         });
-
-
-
-
-        /*var rentals = new Array();
-                        $("#tblMovies TBODY TR").each(function () {
-                            var url = document.URL;
-                            var id = url.substring(url.lastIndexOf('=') + 1);
-                            var row = $(this);
-                            var rental = {};
-                            rental.id = 1;
-                            rental.DateCreated = document.getElementById("DateCreated").value;
-                            rental.CustomerId = id;
-                            rental.MovieId = row.find("TD").eq(0).html();
-                            // rental.movie = row.find("TD").eq(1).html();
-                            rental.DateRented = document.getElementById("DateRented").value;
-                            rental.DateReturned = document.getElementById("DateReturned").value;
-                            rentals.push(rental);
-                        });*/
-
-
-        /*$(document).on("click", "#btnPost", function () {
-            //Loop through the Table rows and build a JSON array.
-
-            var rental = [
-                { id : 1, DateCreated : document.getElementById("DateCreated").value, CustomerId : 3, MovieId : 5, DateRented : document.getElementById("DateRented").value, DateReturned : document.getElementById("DateReturned").value },
-                { id : 2, DateCreated : document.getElementById("DateCreated").value, CustomerId : 4, MovieId : 6, DateRented : document.getElementById("DateRented").value, DateReturned : document.getElementById("DateReturned").value }
-            ];
-
-            //console.log(rentals)
-            //Send the JSON array to Controller using AJAX.
-
-            rental = JSON.stringify({ 'rental': rental }); //for test
-            console.log(rental)
-            $.ajax({
-                type: "POST",
-                url: "/Rentals/Create",
-                data: rental,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (r) {
-                    alert(r + " record(s) inserted.");
-                }
-            });
-        });*/
-
-
 
 
     </script>

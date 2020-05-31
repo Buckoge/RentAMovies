@@ -49,9 +49,11 @@ namespace RentAMovies.Controllers
             }
 
             return View(rental);
-        }
+        }        
+
         [HttpPost]
-        public async Task<IActionResult> Create(List<Rental> rentals)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateRental(IEnumerable<Rental> rentals)
         {
 
             //Check for NULL.
@@ -74,14 +76,9 @@ namespace RentAMovies.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Create([Bind("Id,DateCreated,CustomerId,MovieId,Status,DateRented,DateReturned")] int CustomerId)
+        public IActionResult Create([Bind("Id,DateCreated,CustomerId,MovieId,Status,DateRented,DateReturned")] int CustomerId)
         {
-            //var model = new Rental { DateCreated = DateTime.Now };
-            
-            //    _context.Add(rental);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-
+             
             ViewData["Customer"] = _context.Customers.First(c => c.Id == CustomerId);
             ViewData["MoviesSelectList"] = new SelectList(_context.Movies, "Id", "Name");
             return View();

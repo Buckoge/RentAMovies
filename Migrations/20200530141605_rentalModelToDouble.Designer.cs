@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentAMovies.Data;
 
 namespace RentAMovies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200530141605_rentalModelToDouble")]
+    partial class rentalModelToDouble
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -319,7 +321,10 @@ namespace RentAMovies.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<double>("CustomerId")
+                        .HasColumnType("double");
+
+                    b.Property<int?>("CustomerId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateCreated")
@@ -331,17 +336,20 @@ namespace RentAMovies.Migrations
                     b.Property<DateTime?>("DateReturned")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("MovieId")
+                    b.Property<double>("MovieId")
+                        .HasColumnType("double");
+
+                    b.Property<int?>("MovieId1")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("Status")
+                    b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId1");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("MovieId1");
 
                     b.ToTable("Rentals");
                 });
@@ -452,15 +460,11 @@ namespace RentAMovies.Migrations
                 {
                     b.HasOne("RentAMovies.Models.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId1");
 
                     b.HasOne("RentAMovies.Models.Movie", "Movie")
                         .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MovieId1");
                 });
 
             modelBuilder.Entity("RentAMovies.Models.VideoKlub", b =>
