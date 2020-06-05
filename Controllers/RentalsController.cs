@@ -55,8 +55,8 @@ namespace RentAMovies.Controllers
         }
         
         [HttpPost]
-        [IgnoreAntiforgeryToken]
-        public async Task<IActionResult> CreateRental(IEnumerable<Rental> rentals)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(IEnumerable<Rental> rentals)
         {            
              if (rentals == null)
              {
