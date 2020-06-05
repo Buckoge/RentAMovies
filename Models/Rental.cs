@@ -10,8 +10,9 @@ namespace RentAMovies.Models
     {
         [Key]
         
-        public int Id { get; set; }        
-        public DateTime DateCreated { get; set; }
+        public int Id { get; set; }
+       
+        public DateTime? DateCreated { get; set; }
         
         public int CustomerId { get; set; }
         
@@ -25,8 +26,8 @@ namespace RentAMovies.Models
         public Movie Movie { get; set; }
         
         public bool? Status { get; set; }
-       
-        public DateTime DateRented { get; set; }
+        
+        public DateTime? DateRented { get; set; }
         
         public DateTime? DateReturned { get; set; }
     }

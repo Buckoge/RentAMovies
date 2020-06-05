@@ -16,15 +16,13 @@
     @Html.AntiForgeryToken()
 }
 
-
 <h1>Create new rental for</h1>
 <h2>@customer.Name</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="@customer" id="customer" />
             <div class="form-group">
                 <label asp-for="DateCreated" class="control-label"></label>
                 <input asp-for="DateCreated" class="form-control" id="DateCreated" />
@@ -44,7 +42,7 @@
                 <input asp-for="DateReturned" class="form-control" id="DateReturned" />
                 <span asp-validation-for="DateReturned" class="text-danger"></span>
             </div>
-            <div class="form-group" id="myDiv">
+            <div class="form-group" id="myDiv" data-url="@Url.Action("CreateRental", "Rentals")">
                 <input type="button" value="Add movie" class="btn btn-primary" id="myBtn" />
 
                 <input type="button" id="btnPost" value="Create" class="btn btn-primary" />
@@ -76,16 +74,6 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-    <!-- JS includes -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-    <script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.min.js"></script>
-
-    <script src="//ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
-
 
     <script type="text/javascript">
 
@@ -125,30 +113,31 @@
             });
 
             //Send the JSON array to Controller using AJAX.
-            rentals = JSON.stringify({ 'rentals': rentals });
             console.log(rentals);
 
             var form = $('#__AjaxAntiForgeryForm');
             var token = $('input[name="__RequestVerificationToken"]', form).val();
-            $.ajax({
+            jQuery.support.cors = true;
+            $.ajax({                
                 type: "POST",
-                traditional: true,
+                url: $(this).data('url'),
                 headers:
                 {
                     "RequestVerificationToken": token
                 },
-                url: "/Rentals/CreateRental",
-                data: rentals,
-                content: "application/json; charset=utf-8",
-                dataType: "json",
+                ContentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: { "rentals": rentals },
                 success: function (r) {
                     alert(r.rentals + " record(s) inserted.");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(xhr.status);
                     alert(thrownError);
+                    alert(xhr.responseText);
                 }
             });
+
         });
 
 
