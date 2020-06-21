@@ -46,19 +46,11 @@ namespace RentAMovies
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddControllers().
-        AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-            options.JsonSerializerOptions.PropertyNamingPolicy = null;
-            options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
-        });
+            services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
-
-
-            services.AddCors();
+            
             services.AddControllers();
             services.AddMvc();
             services.AddControllersWithViews();
@@ -80,24 +72,12 @@ namespace RentAMovies
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
-
-            app.UseCors(
-                 policy =>
-                 {
-                     policy.WithOrigins("https://localhost:44316/", "https://localhost:44316/")
-                         .AllowAnyMethod()
-                         .AllowAnyHeader()
-                         .AllowCredentials();
-                 }
-             );
+            }           
 
             
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
@@ -105,7 +85,7 @@ namespace RentAMovies
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

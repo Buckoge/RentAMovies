@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - RentAMovies</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="https://kit.fontawesome.com/18e8282e4d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 </head>
 <body class="search-background">
     <header>
@@ -20,23 +25,24 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="VideoKlubs" asp-action="Index">Video klub</a>
+                            <a class="nav-link" asp-area="Customer" asp-controller="VideoKlubs" asp-action="Index" >Videosklub</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Rentals" asp-action="Index">Rental</a>
+                            <a class="nav-link" asp-controller="Rentals" asp-action="Index" asp-area="Customer">Rental</a>
                         </li>
                         <li class="nav-item dropdown text-white-50">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Content Management
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Movies">Movies</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Customers">Customers</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="MembershipTypes">MembershipTypes</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Genres">Genres</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="Movies" asp-area="Admin">Movies</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="Customers" asp-area="Admin">Customers</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="MembershipTypes" asp-area="Admin">MembershipTypes</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="Genres" asp-area="Admin">Genres</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -61,6 +67,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
