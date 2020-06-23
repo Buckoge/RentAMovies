@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentAMovies.Data;
 using RentAMovies.Models;
+using RentAMovies.Models.ViewModels;
 
 namespace RentAMovies.Controllers
 {
@@ -48,11 +49,22 @@ namespace RentAMovies.Controllers
         }
 
         // GET: VideoKlubs/Create
-        public IActionResult Create()
-        {
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name");
-            return View();
+        public async Task<IActionResult> Create()
+        {   
+           
+            RentalManyMovieViewModel model = new RentalManyMovieViewModel
+            {
+                Movies = await _context.Movies.ToListAsync(),
+                VideoKlub =new Models.VideoKlub(),
+                MovieList = await _context.Movies.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync(),
+                Customers = await _context.Customers.ToListAsync(),
+                CustomerList = await _context.Movies.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync()
+            };
+
+            return View(model);
+
+
+
         }
 
         // POST: VideoKlubs/Create

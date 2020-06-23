@@ -1,4 +1,5 @@
-﻿@model RentAMovies.Models.VideoKlub
+﻿@model RentAMovies.Models.ViewModels.RentalManyMovieViewModel
+@using RentAMovies.Extensions
 
 @{
     ViewData["Title"] = "Create";
@@ -9,72 +10,51 @@
 <h2 class="text-info">Create VideoKlub</h2>
 <br />
 
-<form method="post" asp-action="Create">
-    <div class="border backgroundWhite">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="DateCreated" class="col-form-label"></label>
+<div class="border backgroundWhite">
+    <div class="col-8 border-right">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="VideoKlub.CustomerId" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <select asp-items="Model.Customers.ToSelectListItem(Model.VideoKlub.CustomerId)" class="form-control"></select>
+                </div>
+                <span asp-validation-for="VideoKlub.CustomerId" class="text-danger"></span>
             </div>
-            <div class="col-5">
-                <input asp-for="DateCreated" class="form-control" />
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="VideoKlub.MovieId" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <select id="ddlMovielist" asp-items="Model.Movies.ToSelectListItem(Model.VideoKlub.MovieId)" class="form-control"></select>
+                </div>
+                <span asp-validation-for="VideoKlub.MovieId" class="text-danger"></span>
             </div>
-            <span asp-validation-for="DateCreated" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="CustomerId" class="col-form-label"></label>
+            <div class="form-group row">
+                <div class="col-5 offset-2">
+                    <partial name="_CreateAndBackToListButton" />
+                </div>
             </div>
-            <div class="col-5">
-                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
-            </div>
-            <span asp-validation-for="CustomerId" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="MovieId" class="col-form-label"></label>
-            </div>
-            <div class="col-5">
-                <select asp-for="MovieId" class="form-control" asp-items="ViewBag.MovieId"></select>
-            </div>
-            <span asp-validation-for="MovieId" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Status" class="form-check-label">Rented </label>
-            </div>
-            <div class="col-5">
-                <input class="form-check-label" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="DateRented" class="col-form-label"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="DateRented" class="form-control" />
-            </div>
-            <span asp-validation-for="DateRented" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="DateReturned" class="col-form-label"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="DateReturned" class="form-control" />
-            </div>
-            <span asp-validation-for="DateReturned" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-5 offset-2">
-                <partial name="_CreateAndBackToListButton" />
-            </div>
-        </div>
+        </form>
     </div>
-</form>
+
+    <div class="col-3 offset-1">
+        @if (Model.MovieList.Count() > 0)
+        {
+            <p> Existing Movies: </p>
+
+            <div id="MovieList">
+                <ul class="list-group"></ul>
+            </div>
+        }
+    </div>
+</div>
 
 
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
