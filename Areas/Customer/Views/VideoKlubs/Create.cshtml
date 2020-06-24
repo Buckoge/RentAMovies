@@ -10,40 +10,80 @@
 <h2 class="text-info">Create VideoKlub</h2>
 <br />
 
-<div class="border backgroundWhite">
+<div class="border backgroundWhite row">
     <div class="col-8 border-right">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group row">
-                <div class="col-2">
+                <div class="col-3">
+                    <label asp-for="VideoKlub.DateCreated" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="VideoKlub.DateCreated" class="form-control" />
+                </div>
+                <span asp-validation-for="VideoKlub.DateCreated" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="VideoKlub.DateRented" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="VideoKlub.DateRented" class="form-control" />
+                </div>
+                <span asp-validation-for="VideoKlub.DateRented" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="VideoKlub.DateReturned" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="VideoKlub.DateReturned" class="form-control" />
+                </div>
+                <span asp-validation-for="VideoKlub.DateReturned" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
                     <label asp-for="VideoKlub.CustomerId" class="col-form-label"></label>
                 </div>
                 <div class="col-5">
-                    <select asp-items="Model.Customers.ToSelectListItem(Model.VideoKlub.CustomerId)" class="form-control"></select>
+                    <select asp-for="VideoKlub.CustomerId"
+                            asp-items="@(new SelectList(Model.Customers,"Id","Name"))" class="form-control">
+                        <option>Please select one</option>
+                    </select>
                 </div>
                 <span asp-validation-for="VideoKlub.CustomerId" class="text-danger"></span>
             </div>
             <div class="form-group row">
-                <div class="col-2">
+                <div class="col-3">
                     <label asp-for="VideoKlub.MovieId" class="col-form-label"></label>
                 </div>
                 <div class="col-5">
-                    <select id="ddlMovielist" asp-items="Model.Movies.ToSelectListItem(Model.VideoKlub.MovieId)" class="form-control"></select>
+                    <select id="ddlMovielist" asp-for="VideoKlub.MovieId"
+                            asp-items="@(new SelectList(Model.Movies,"Id","Name"))" class="form-control">
+                        <option>Please select one</option>
+                    </select>
                 </div>
                 <span asp-validation-for="VideoKlub.MovieId" class="text-danger"></span>
             </div>
             <div class="form-group row">
-                <div class="col-5 offset-2">
+                <div class="col-3">
+                    <label asp-for="VideoKlub.Status" class="form-check-label">Rented </label>
+                </div>
+                <div class="col-5">
+                    <input class="form-check-label" asp-for="VideoKlub.Status" /> @Html.DisplayNameFor(model => model.VideoKlub.Status)
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-5 offset-3">
                     <partial name="_CreateAndBackToListButton" />
                 </div>
             </div>
         </form>
     </div>
-
     <div class="col-3 offset-1">
         @if (Model.MovieList.Count() > 0)
         {
-            <p> Existing Movies: </p>
+            <p> Selected Movies: </p>
 
             <div id="MovieList">
                 <ul class="list-group"></ul>

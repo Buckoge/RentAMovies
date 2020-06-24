@@ -55,10 +55,10 @@ namespace RentAMovies.Controllers
             RentalManyMovieViewModel model = new RentalManyMovieViewModel
             {
                 Movies = await _context.Movies.ToListAsync(),
-                VideoKlub =new Models.VideoKlub(),
+                VideoKlub = new Models.VideoKlub(),
                 MovieList = await _context.Movies.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync(),
                 Customers = await _context.Customers.ToListAsync(),
-                CustomerList = await _context.Movies.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync()
+                CustomerList = await _context.Customers.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync()
             };
 
             return View(model);
@@ -68,22 +68,36 @@ namespace RentAMovies.Controllers
         }
 
         // POST: VideoKlubs/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DateCreated,CustomerId,MovieId,Status,DateRented,DateReturned")] VideoKlub videoKlub)
+        public async Task<IActionResult> Create(RentalManyMovieViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(videoKlub);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var doesMovieCustomerExists = _context.VideoKlub.Include(p => p.Customer).Where(p => p.MovieId == model.VideoKlub.MovieId && p.CustomerId == model.VideoKlub.CustomerId);
+                if (doesMovieCustomerExists.Count() > 0)
+                {
+                    //Error
+                }
+                else
+                {
+                    _context.VideoKlub.Add(model.VideoKlub);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", videoKlub.CustomerId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name", videoKlub.MovieId);
-            return View(videoKlub);
-        }
+                RentalManyMovieViewModel modelVM = new RentalManyMovieViewModel
+                {
+                    Movies = await _context.Movies.ToListAsync(),
+                    VideoKlub = new Models.VideoKlub(),
+                    MovieList = await _context.Movies.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync(),
+                    Customers = await _context.Customers.ToListAsync(),
+                    CustomerList = await _context.Customers.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync()
+                };
+
+                return View(modelVM);
+
+            }
 
         // GET: VideoKlubs/Edit/5
         public async Task<IActionResult> Edit(int? id)
