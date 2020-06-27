@@ -15,6 +15,8 @@ namespace RentAMovies.Controllers
     public class VideoKlubsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        [TempData]
+        public string StatusMessage { get; set; }
 
         public VideoKlubsController(ApplicationDbContext context)
         {
@@ -74,30 +76,46 @@ namespace RentAMovies.Controllers
         {
             if (ModelState.IsValid)
             {
-                var doesMovieCustomerExists = _context.VideoKlub.Include(p => p.Customer).Where(p => p.MovieId == model.VideoKlub.MovieId && p.CustomerId == model.VideoKlub.CustomerId);
-                if (doesMovieCustomerExists.Count() > 0)
+                var doesMovieInCustomerExists = _context.VideoKlub.Include(p => p.Customer).Where(p => p.MovieId == model.VideoKlub.MovieId && p.CustomerId == model.VideoKlub.CustomerId);
+
+                if (doesMovieInCustomerExists.Count() > 0)
                 {
-                    //Error
+                    StatusMessage = "Error : Movie is already rented by " + doesMovieInCustomerExists.First().Customer.Name + ". Please choose another one.";
                 }
                 else
                 {
                     _context.VideoKlub.Add(model.VideoKlub);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Create));
                 }
             }
-                RentalManyMovieViewModel modelVM = new RentalManyMovieViewModel
-                {
-                    Movies = await _context.Movies.ToListAsync(),
-                    VideoKlub = new Models.VideoKlub(),
-                    MovieList = await _context.Movies.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync(),
-                    Customers = await _context.Customers.ToListAsync(),
-                    CustomerList = await _context.Customers.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync()
-                };
+            RentalManyMovieViewModel modelVM = new RentalManyMovieViewModel
+            {
+                Movies = await _context.Movies.ToListAsync(),
+                VideoKlub = new Models.VideoKlub(),
+                MovieList = await _context.Movies.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync(),
+                Customers = await _context.Customers.ToListAsync(),
+                CustomerList = await _context.Customers.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync(),
+                StatusMessage = StatusMessage
+            };
 
-                return View(modelVM);
+            return View(modelVM);
+            
+        }
 
-            }
+        [ActionName("GetMovie")]
+        public async Task<IActionResult> GetMovie(int id)
+        {
+            IEnumerable<VideoKlub> Movies = new List<VideoKlub>();
+
+            //Movies = await (from VideoKlub in _context.VideoKlub
+            //                     where VideoKlub.CustomerId == id
+            //                   select  VideoKlub).ToListAsync();
+
+            Movies = await _context.VideoKlub.Where(v => v.CustomerId == id).Include(v => v.Movie).ToListAsync();
+            
+            return Json(new SelectList(Movies, "MovieId", "Movie.Name"));
+        }
 
         // GET: VideoKlubs/Edit/5
         public async Task<IActionResult> Edit(int? id)

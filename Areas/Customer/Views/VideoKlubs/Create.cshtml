@@ -10,6 +10,8 @@
 <h2 class="text-info">Create VideoKlub</h2>
 <br />
 
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
 <div class="border backgroundWhite row">
     <div class="col-8 border-right">
         <form asp-action="Create">
@@ -46,7 +48,7 @@
                     <label asp-for="VideoKlub.CustomerId" class="col-form-label"></label>
                 </div>
                 <div class="col-5">
-                    <select asp-for="VideoKlub.CustomerId"
+                    <select id="ddlMovielist" asp-for="VideoKlub.CustomerId"
                             asp-items="@(new SelectList(Model.Customers,"Id","Name"))" class="form-control">
                         <option>Please select one</option>
                     </select>
@@ -58,7 +60,7 @@
                     <label asp-for="VideoKlub.MovieId" class="col-form-label"></label>
                 </div>
                 <div class="col-5">
-                    <select id="ddlMovielist" asp-for="VideoKlub.MovieId"
+                    <select asp-for="VideoKlub.MovieId"
                             asp-items="@(new SelectList(Model.Movies,"Id","Name"))" class="form-control">
                         <option>Please select one</option>
                     </select>
@@ -75,7 +77,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-5 offset-3">
-                    <partial name="_CreateAndBackToListButton" />
+                    <partial name="_AddMovieAndFinishRental" />
                 </div>
             </div>
         </form>
@@ -95,6 +97,40 @@
 
 
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function updateMovieList() {
+            var MovieSelected = document.getElementById("ddlMovielist").value;
+
+            $list = $('#MovieList');
+
+            $.ajax({
+                url: '/Customer/VideoKlubs/GetMovie/' + MovieSelected,
+                type: 'GET',
+                dataType: 'text',
+                success: function (data) {
+                    results = JSON.parse(data);
+                    $list.html('');
+                    $list.append(' <ul class="list-group"> ');
+                    for (i in results) {
+                        $list.append('<li class="list-group-item">' + results[i].text + '</li>');
+                    }
+                    $list.append('</ul>');
+                }
+
+            });
+
+        }
+
+        $(document).ready(function () {
+            updateMovieList();
+        });
+
+        $("#ddlMovielist").on("change", function () {
+            updateMovieList();
+        });
+    </script>
+
+}

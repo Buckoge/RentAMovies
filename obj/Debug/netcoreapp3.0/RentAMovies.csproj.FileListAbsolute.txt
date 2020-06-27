@@ -727,3 +727,5 @@ D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAM
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.pdb
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.genruntimeconfig.cache
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.csprojAssemblyReference.cache
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\Razor\Views\Shared\_StatusMessage.cshtml.g.cs
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\Razor\Views\Shared\_AddMovieAndFinishRental.cshtml.g.cs

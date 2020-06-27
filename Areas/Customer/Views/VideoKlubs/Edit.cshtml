@@ -26,7 +26,7 @@
                 <label asp-for="CustomerId" class="col-form-label"></label>
             </div>
             <div class="col-5">
-                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+                <select asp-for="CustomerId"  disabled class="form-control" asp-items="ViewBag.CustomerId"></select>
             </div>
             <span asp-validation-for="CustomerId" class="text-danger"></span>
         </div>
