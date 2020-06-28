@@ -106,6 +106,12 @@ namespace RentAMovies.Controllers
         [ActionName("GetMovie")]
         public async Task<IActionResult> GetMovie(int id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            else
+            { 
             IEnumerable<VideoKlub> Movies = new List<VideoKlub>();
 
             //Movies = await (from VideoKlub in _context.VideoKlub
@@ -113,8 +119,9 @@ namespace RentAMovies.Controllers
             //                   select  VideoKlub).ToListAsync();
 
             Movies = await _context.VideoKlub.Where(v => v.CustomerId == id).Include(v => v.Movie).ToListAsync();
-            
+
             return Json(new SelectList(Movies, "MovieId", "Movie.Name"));
+        }
         }
 
         // GET: VideoKlubs/Edit/5
