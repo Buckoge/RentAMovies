@@ -8,15 +8,27 @@ namespace RentAMovies.Models
 {
     public class Rental 
     {
+        [Key]
+        
         public int Id { get; set; }
-        public DateTime DateCreated { get; set; }
+       
+        public DateTime? DateCreated { get; set; }
+        
         public int CustomerId { get; set; }
+        
         public Customer Customer { get; set; }
+
+        
         [Display(Name = "Movie name")]
+        
         public int MovieId { get; set; }
-        public Movie? Movie { get; set; }
-        public bool Status { get; set; }
-        public DateTime DateRented { get; set; }
+        
+        public Movie Movie { get; set; }
+        
+        public bool? Status { get; set; }
+        
+        public DateTime? DateRented { get; set; }
+        
         public DateTime? DateReturned { get; set; }
     }
 }

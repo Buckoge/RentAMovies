@@ -288,8 +288,12 @@ namespace RentAMovies.Migrations
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("GenreId")
+                    b.Property<int?>("GenreId")
+                        .IsRequired()
                         .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("MovieDescription")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -322,10 +326,10 @@ namespace RentAMovies.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("DateRented")
+                    b.Property<DateTime?>("DateRented")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime?>("DateReturned")
@@ -334,7 +338,7 @@ namespace RentAMovies.Migrations
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
@@ -364,6 +368,9 @@ namespace RentAMovies.Migrations
                     b.Property<DateTime?>("DateReturned")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int?>("GenreId")
+                        .HasColumnType("int");
+
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
@@ -373,6 +380,8 @@ namespace RentAMovies.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("GenreId");
 
                     b.HasIndex("MovieId");
 
@@ -470,6 +479,10 @@ namespace RentAMovies.Migrations
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("RentAMovies.Models.Genre", "Genre")
+                        .WithMany()
+                        .HasForeignKey("GenreId");
 
                     b.HasOne("RentAMovies.Models.Movie", "Movie")
                         .WithMany()

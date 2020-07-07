@@ -1,0 +1,150 @@
+﻿@model RentAMovies.Models.Rental
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    var customer = ViewData["Customer"] as Customer;
+    var Movie = ViewData["MoviesSelectList"] as Movie;
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<h1>Create new rental for</h1>
+<h2>@customer.Name</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DateCreated" class="control-label"></label>
+                <input asp-for="DateCreated" class="form-control" id="DateCreated" />
+                <span asp-validation-for="DateCreated" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateRented" class="control-label"></label>
+                <input asp-for="DateRented" class="form-control" id="DateRented" />
+                <span asp-validation-for="DateRented" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MovieId" class="control-label"></label>
+                <select asp-for="MovieId" class="form-control" id="movie" asp-items="ViewBag.MoviesSelectList"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateReturned" class="control-label"></label>
+                <input asp-for="DateReturned" class="form-control" id="DateReturned" />
+                <span asp-validation-for="DateReturned" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="myDiv" data-url="@Url.Action("Create", "Rentals")">
+                <input type="button" value="Add movie" class="btn btn-primary" id="myBtn" />
+
+                <input type="button" id="btnPost" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<body>
+    <div class="col-12 border p-3">
+        <table id="tblMovies" class="table table-striped border table-hover table-light" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</body>
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+
+        $(function () {
+            $(document).on('click', '.remove', function () {
+                $(this).parents('tr').remove();
+            });
+        });
+
+
+        $(document).ready(function () {
+            $("#myBtn").click(function () {
+                var SelectedMovieId = $("#movie option:selected").index() + 1;
+                var SelectedMovieName = $("#movie option:selected").text();
+                var html = '<tbody><tr><td id="MovieId">' + SelectedMovieId + '</td><td id="Movie">' + SelectedMovieName + '</td><td><button class="remove">-</button></td></tr></tbody>';
+                $('#tblMovies').append(html);
+            });
+        });
+
+
+        $('#myDiv').on("click", "#btnPost", function () {
+
+            //Loop through the Table rows and build a JSON array.
+            var rentals = [];
+            $("#tblMovies TBODY TR").each(function () {
+                var url = document.URL;
+                var id = url.substring(url.lastIndexOf('=') + 1);
+                var row = $(this);
+                rentals.push({
+                    DateCreated: document.getElementById("DateCreated").value,
+                    CustomerId: id,
+                    MovieId: row.find("TD").eq(0).html(),
+                    Status: "0",
+                    DateRented: document.getElementById("DateRented").value,
+                    DateReturned: document.getElementById("DateReturned").value
+                });
+            });
+
+            //Send the JSON array to Controller using AJAX.
+            console.log(rentals);
+
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            jQuery.support.cors = true;
+            $.ajax({ 
+                url: $(this).data('url'),
+                type: "POST",                
+                headers:
+                {
+                    "RequestVerificationToken": token
+                },
+                ContentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: token,
+                    "rentals": rentals
+                },
+                success: function (r) {
+                    alert(" movies(s) inserted.");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                    alert(xhr.responseText);
+                }
+            });
+
+        });
+
+
+    </script>
+
+
+}
