@@ -129,7 +129,7 @@ namespace RentAMovies.Migrations
                 column: "CustomerId",
                 principalTable: "Customers",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Rentals_Movies_MovieId",
@@ -137,7 +137,7 @@ namespace RentAMovies.Migrations
                 column: "MovieId",
                 principalTable: "Movies",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
         }
     }
 }

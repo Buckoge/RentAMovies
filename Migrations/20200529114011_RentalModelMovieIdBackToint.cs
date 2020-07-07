@@ -36,7 +36,7 @@ namespace RentAMovies.Migrations
                 column: "MovieId",
                 principalTable: "Movies",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

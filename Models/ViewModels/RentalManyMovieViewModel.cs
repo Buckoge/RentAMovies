@@ -10,9 +10,12 @@ namespace RentAMovies.Models.ViewModels
     {
         public IEnumerable<Customer> Customers { get; set; }
         public IEnumerable<Movie> Movies { get; set; }
+        public IEnumerable<Genre> Genres { get; set; }
         public VideoKlub VideoKlub { get; set; }
-        public List<string> MovieList { get; set; }
+        public Movie Movie { get; set; }
         public List<string> CustomerList { get; set; }
+        public List<string> MovieList { get; set; }
+        public List<string> GenreList { get; set; }
         public string StatusMessage { get; set; }
     }
 }

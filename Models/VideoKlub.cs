@@ -19,6 +19,12 @@ namespace RentAMovies.Models
         [ForeignKey("CustomerId")]
         public Customer Customer { get; set; }
 
+        [Display(Name = "Genre name")]
+        public int? GenreId { get; set; }
+
+        [ForeignKey("GenreId")]
+        public Genre Genre { get; set; }
+         
         [Display(Name = "Movie name")]
         public int MovieId { get; set; }
 

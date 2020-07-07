@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentAMovies.Data;
 
 namespace RentAMovies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200703114745_MovieImageAndVideoKubGenre")]
+    partial class MovieImageAndVideoKubGenre
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,8 +290,7 @@ namespace RentAMovies.Migrations
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("GenreId")
-                        .IsRequired()
+                    b.Property<int>("GenreId")
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
@@ -368,7 +369,7 @@ namespace RentAMovies.Migrations
                     b.Property<DateTime?>("DateReturned")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("GenreId")
+                    b.Property<int>("GenreId")
                         .HasColumnType("int");
 
                     b.Property<int>("MovieId")
@@ -482,7 +483,9 @@ namespace RentAMovies.Migrations
 
                     b.HasOne("RentAMovies.Models.Genre", "Genre")
                         .WithMany()
-                        .HasForeignKey("GenreId");
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RentAMovies.Models.Movie", "Movie")
                         .WithMany()

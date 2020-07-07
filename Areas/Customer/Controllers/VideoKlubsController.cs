@@ -26,7 +26,7 @@ namespace RentAMovies.Controllers
         // GET: VideoKlubs
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.VideoKlub.Include(v => v.Customer).Include(v => v.Movie);
+            var applicationDbContext = _context.VideoKlub.Include(c => c.Customer).Include(m => m.Movie).Include(g => g.Genre);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -56,8 +56,10 @@ namespace RentAMovies.Controllers
            
             RentalManyMovieViewModel model = new RentalManyMovieViewModel
             {
-                Movies = await _context.Movies.ToListAsync(),
                 VideoKlub = new Models.VideoKlub(),
+                Genres = await _context.Genres.ToListAsync(),
+                GenreList = await _context.Genres.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync(),
+                Movies = await _context.Movies.ToListAsync(),                
                 MovieList = await _context.Movies.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync(),
                 Customers = await _context.Customers.ToListAsync(),
                 CustomerList = await _context.Customers.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync()
@@ -78,6 +80,8 @@ namespace RentAMovies.Controllers
             {
                 var doesMovieInCustomerExists = _context.VideoKlub.Include(p => p.Customer).Where(p => p.MovieId == model.VideoKlub.MovieId && p.CustomerId == model.VideoKlub.CustomerId);
 
+                model.VideoKlub.MovieId = Convert.ToInt32(Request.Form["MovieId"].ToString());
+
                 if (doesMovieInCustomerExists.Count() > 0)
                 {
                     StatusMessage = "Error : Movie is already rented by " + doesMovieInCustomerExists.First().Customer.Name + ". Please choose another one.";
@@ -93,6 +97,7 @@ namespace RentAMovies.Controllers
             {
                 Movies = await _context.Movies.ToListAsync(),
                 VideoKlub = new Models.VideoKlub(),
+                Movie = new Models.Movie(),
                 MovieList = await _context.Movies.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync(),
                 Customers = await _context.Customers.ToListAsync(),
                 CustomerList = await _context.Customers.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync(),
@@ -106,12 +111,7 @@ namespace RentAMovies.Controllers
         [ActionName("GetMovie")]
         public async Task<IActionResult> GetMovie(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            else
-            { 
+            
             IEnumerable<VideoKlub> Movies = new List<VideoKlub>();
 
             //Movies = await (from VideoKlub in _context.VideoKlub
@@ -121,7 +121,19 @@ namespace RentAMovies.Controllers
             Movies = await _context.VideoKlub.Where(v => v.CustomerId == id).Include(v => v.Movie).ToListAsync();
 
             return Json(new SelectList(Movies, "MovieId", "Movie.Name"));
+        
         }
+        [ActionName("GetMovieByGenre")]
+        public async Task<IActionResult> GetMovieByGenre(int id)
+        {
+
+            IEnumerable<Movie> Moviess = new List<Movie>();
+
+
+            Moviess = await _context.Movies.Where(v => v.GenreId == id).ToListAsync();
+
+            return Json(new SelectList(Moviess, "Id", "Name"));
+
         }
 
         // GET: VideoKlubs/Edit/5

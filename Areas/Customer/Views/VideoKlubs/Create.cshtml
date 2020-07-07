@@ -1,4 +1,5 @@
 ﻿@model RentAMovies.Models.ViewModels.RentalManyMovieViewModel
+
 @using RentAMovies.Extensions
 
 @{
@@ -57,11 +58,23 @@
             </div>
             <div class="form-group row">
                 <div class="col-3">
+                    <label asp-for="VideoKlub.GenreId" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <select asp-for="@Model.VideoKlub.GenreId"
+                            asp-items="@(new SelectList(Model.Genres,"Id","Name"))" id="GenreId" class="form-control">
+                        <option>Please select one</option>
+                    </select>
+                </div>
+                <span asp-validation-for="VideoKlub.GenreId" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
                     <label asp-for="VideoKlub.MovieId" class="col-form-label"></label>
                 </div>
                 <div class="col-5">
-                    <select asp-for="VideoKlub.MovieId"
-                            asp-items="@(new SelectList(Model.Movies,"Id","Name"))" class="form-control">
+                    <select asp-for="@Model.VideoKlub.MovieId" name="MovieId" id="MovieId"
+                            asp-items="@(new SelectList(string.Empty,"Id","Name"))" class="form-control">
                         <option>Please select one</option>
                     </select>
                 </div>
@@ -131,6 +144,41 @@
         $("#ddlMovielist").on("change", function () {
             updateMovieList();
         });
+    </script>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+            toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
+            toolbar_mode: 'floating',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            GetMovieByGenre();
+            $('#GenreId').change(function () {
+                GetMovieByGenre();
+            });
+        });
+
+
+        function GetMovieByGenre() {
+            var url = '/Customer/VideoKlubs/GetMovieByGenre';
+            var ddlsoruce = '#GenreId';
+            $.getJSON(url, { id: $(ddlsoruce).val() }, function (data) {
+                var items = '';
+                $('#MovieId').empty();
+                $.each(data, function (i, movie) {
+                    items += "<option value='" + movie.value + "'>" + movie.text + "</option>";
+                });
+
+                $('#MovieId').html(items);
+            })
+        }
     </script>
 
 }
