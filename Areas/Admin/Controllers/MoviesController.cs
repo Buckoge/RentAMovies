@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentAMovies.Data;
 using RentAMovies.Models;
+using RentAMovies.Utility;
 
 namespace RentAMovies.Controllers
 {
@@ -61,16 +63,44 @@ namespace RentAMovies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,GenreId,MovieDescription,DateAdded,ReleaseDate,NumberInStock,NumberAvailable")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Name,GenreId,MovieDescription,DateAdded,ReleaseDate,NumberInStock,NumberAvailable,Image")] Movie movie)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
+            //Work on the image saving section
+
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+
+            var movieItemFromDb = await _context.Movies.FindAsync(movie.Id);
+
+            if (files.Count > 0)
+            {
+                //files has been uploaded
+                var uploads = Path.Combine(webRootPath, "images");
+                var extension = Path.GetExtension(files[0].FileName);
+
+                using (var filesStream = new FileStream(Path.Combine(uploads, movie.Id + extension), FileMode.Create))
+                {
+                    files[0].CopyTo(filesStream);
+                }
+                movieItemFromDb.Image = @"\images\" + movie.Id + extension;
+            }
+            else
+            {
+                //no file was uploaded, so use default
+                var uploads = Path.Combine(webRootPath, @"images\" + SD.DefaultFoodImage);
+                System.IO.File.Copy(uploads, webRootPath + @"\images\" + movie.Id + ".jpg");
+                movieItemFromDb.Image = @"\images\" + movie.Id + ".jpg";
+            }
+
+            await _context.SaveChangesAsync();
             ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", movie.GenreId);
-            return View(movie);
+            
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Movies/Edit/5
@@ -95,7 +125,7 @@ namespace RentAMovies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,GenreId,MovieDescription,DateAdded,ReleaseDate,NumberInStock,NumberAvailable")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,GenreId,MovieDescription,DateAdded,ReleaseDate,NumberInStock,NumberAvailable,Image")] Movie movie)
         {
             if (id != movie.Id)
             {
