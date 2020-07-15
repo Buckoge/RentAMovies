@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using RentAMovies.Utility
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,7 +18,10 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RentAMovies</a>
+                <a class="navbar-brand" asp-area="Customer" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/HorizonT.jpg" />
+                    <label class="text-info" style="cursor:pointer">HorizonT</label>
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -28,26 +33,33 @@
                             <a class="nav-link" asp-area="Customer" asp-controller="VideoKlubs" asp-action="Index">Videosklub</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" asp-controller="Rentals" asp-action="Index" asp-area="Customer">Rental</a>
                         </li>
-                        <li class="nav-item dropdown text-white-50">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Content Management
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Movies" asp-area="Admin">Movies</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Customers" asp-area="Admin">Customers</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="MembershipTypes" asp-area="Admin">MembershipTypes</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Genres" asp-area="Admin">Genres</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
+                        @if (User.IsInRole(SD.ManagerUser))
+                        {
+                            <li class="nav-item dropdown text-white-50">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Content Management
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="Movies" asp-area="Admin">Movies</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="Customers" asp-area="Admin">Customers</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="MembershipTypes" asp-area="Admin">MembershipTypes</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="Genres" asp-area="Admin">Genres</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="User" asp-area="Admin">User</a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li style="color:white">
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-shopping-cart"></i> &nbsp; (0)
+                                </a>
+                            </li>
+                        }                        
                     </ul>
                 </div>
             </div>
@@ -61,7 +73,7 @@
 
     <footer class="border-top pl-3 footer text-white-50" style="background-color: #343a40">
         <div class="container">
-            &copy; 2020 - RentAMovies - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - by GSoftware - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
