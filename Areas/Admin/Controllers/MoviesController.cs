@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ using RentAMovies.Utility;
 
 namespace RentAMovies.Controllers
 {
+    [Authorize(Roles = SD.ManagerUser)]
     [Area("Admin")]
     public class MoviesController : Controller
     {
@@ -134,9 +136,40 @@ namespace RentAMovies.Controllers
 
             if (ModelState.IsValid)
             {
+
                 try
                 {
                     _context.Update(movie);
+
+
+                    string webRootPath = _hostingEnvironment.WebRootPath;
+                    var files = HttpContext.Request.Form.Files;
+
+                    var movieItemFromDb = await _context.Movies.FindAsync(movie.Id);
+
+                    if (files.Count > 0)
+                    {
+                        //New Image has been uploaded
+                        var uploads = Path.Combine(webRootPath, "images");
+                        var extension_new = Path.GetExtension(files[0].FileName);
+
+                        //Delete the original file
+                       /* var imagePath = Path.Combine(webRootPath, movieItemFromDb.Image.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }*/
+
+                        //we will upload the new file
+                        using (var filesStream = new FileStream(Path.Combine(uploads, movie.Id + extension_new), FileMode.Create))
+                        {
+                            files[0].CopyTo(filesStream);
+                        }
+                        movieItemFromDb.Image = @"\images\" + movie.Id + extension_new;
+                    }
+
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

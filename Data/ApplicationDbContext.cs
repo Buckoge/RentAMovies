@@ -19,6 +19,7 @@ namespace RentAMovies.Data
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<VideoKlub> VideoKlub { get; set; }
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
     }
 }
