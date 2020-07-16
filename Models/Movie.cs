@@ -18,12 +18,15 @@ namespace RentAMovies.Models
 
         [ForeignKey("GenreId")]
         public Genre Genre { get; set; }
-        public string MovieDescription { get; set; }
+        public string? MovieDescription { get; set; }
         public DateTime DateAdded { get; set; }
         public DateTime ReleaseDate { get; set; }
         public int NumberInStock { get; set; }
         public int NumberAvailable { get; set; }
-        public string Image { get; set; }
+        public string? Image { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = " Price should be greater than ${1}")]
+        public double Price { get; set; }
     }
 
 }

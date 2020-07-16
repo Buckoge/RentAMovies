@@ -50,11 +50,17 @@ namespace RentAMovies
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddSession(options =>
+            {
+                options.Cookie.IsEssential = true;
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+            });
+
             services.AddControllers();
             services.AddMvc();
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            services.AddSession();
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
