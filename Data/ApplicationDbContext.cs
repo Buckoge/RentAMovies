@@ -20,6 +20,7 @@ namespace RentAMovies.Data
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<VideoKlub> VideoKlub { get; set; }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
 
     }
 }

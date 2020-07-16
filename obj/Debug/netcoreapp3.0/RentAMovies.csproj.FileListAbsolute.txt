@@ -725,6 +725,7 @@ D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAM
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.csprojAssemblyReference.cache
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\Razor\Areas\Admin\Views\User\Index.cshtml.g.cs
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\Razor\Views\Shared\_ThumbnailAreaPArtial.cshtml.g.cs
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\Razor\Areas\Customer\Views\Home\Details.cshtml.g.cs
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\refs\Microsoft.Extensions.FileProviders.Abstractions.dll
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\refs\Microsoft.Extensions.FileProviders.Embedded.dll
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\refs\Microsoft.Extensions.Logging.Debug.dll
