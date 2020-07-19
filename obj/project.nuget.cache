@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BxfckbA99785Pp2gn6L7YoWWwbHKNwNtteJV4CWQmzD9zpOS8MY0YDgzR0PeSVTMLyy92hCo1M3DaYQX3BcV+Q==",
+  "dgSpecHash": "2vKzVhnrJ/2haXFp5Et7AbBy7+46E5sqYB4buDMFW5BI5A4bRBJg7qlq8GHUlUrRVyKaHzphghu40Ptuee3z9A==",
   "success": true,
   "projectFilePath": "D:\\ucenje\\!CSharpProjekti\\RentAMovies\\RentAMovies\\RentAMovies.csproj",
   "expectedPackageFiles": [
@@ -98,6 +98,7 @@
     "C:\\Users\\Lana\\.nuget\\packages\\sqlitepclraw.core\\2.0.0\\sqlitepclraw.core.2.0.0.nupkg.sha512",
     "C:\\Users\\Lana\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.0\\sqlitepclraw.lib.e_sqlite3.2.0.0.nupkg.sha512",
     "C:\\Users\\Lana\\.nuget\\packages\\sqlitepclraw.provider.dynamic_cdecl\\2.0.0\\sqlitepclraw.provider.dynamic_cdecl.2.0.0.nupkg.sha512",
+    "C:\\Users\\Lana\\.nuget\\packages\\stripe.net\\21.7.0\\stripe.net.21.7.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.buffers\\4.3.0\\system.buffers.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
