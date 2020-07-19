@@ -35,6 +35,7 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.0.0",
           "Nancy": "2.0.0",
           "Pomelo.EntityFrameworkCore.MySql": "3.1.1",
+          "Stripe.net": "21.7.0",
           "Microsoft.AspNetCore.Antiforgery": "3.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "3.0.0.0",
@@ -1561,6 +1562,20 @@
         },
         "compile": {
           "lib/netstandard2.0/SQLitePCLRaw.provider.dynamic_cdecl.dll": {}
+        }
+      },
+      "Stripe.net/21.7.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Stripe.net.dll": {
+            "assemblyVersion": "21.7.0.0",
+            "fileVersion": "21.7.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Stripe.net.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -4811,6 +4826,13 @@
       "sha512": "sha512-4Z/Dtk/qqW/UTwmfAcfrzUUEkT7lf5lnAbKCUFLB6pPl0gL6p8CTj7/2zfw2LuT8Gjpd9XCus4LnrAj1p2J3Bw==",
       "path": "sqlitepclraw.provider.dynamic_cdecl/2.0.0",
       "hashPath": "sqlitepclraw.provider.dynamic_cdecl.2.0.0.nupkg.sha512"
+    },
+    "Stripe.net/21.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wwD94vphjk5/NIq0wEO5GnhJVFNk4yzgSCoDzLX7F0llQNVmwmuFswAfa6jw6glBD7o6+02+MlDl7pVOhOGUYg==",
+      "path": "stripe.net/21.7.0",
+      "hashPath": "stripe.net.21.7.0.nupkg.sha512"
     },
     "System.AppContext/4.3.0": {
       "type": "package",

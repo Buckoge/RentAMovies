@@ -9,5 +9,6 @@ namespace RentAMovies.Models.ViewModels
     {
         public IEnumerable<Genre> Genre { get; set; }
         public IEnumerable<Movie> Movie { get; set; }
+        public IEnumerable<Coupon> Coupon { get; set; }
     }
 }
