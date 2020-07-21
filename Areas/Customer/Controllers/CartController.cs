@@ -197,8 +197,8 @@ namespace RentAMovies.Areas.Customer.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
-            //return RedirectToAction("Confirm", "Order", new { id = detailCart.OrderHeader.Id });
+            //return RedirectToAction("Index", "Home");
+            return RedirectToAction("Confirm", "Order", new { id = detailCart.OrderHeader.Id });
 
         }
 
