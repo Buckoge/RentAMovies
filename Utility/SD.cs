@@ -28,6 +28,7 @@ namespace RentAMovies.Utility
         public const string PaymentStatusApproved = "Approved";
         public const string PaymentStatusRejected = "Rejected";
 
+
         public static string ConvertToRawHtml(string source)
         {
             char[] array = new char[source.Length];
