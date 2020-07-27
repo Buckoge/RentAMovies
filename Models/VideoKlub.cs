@@ -34,5 +34,6 @@ namespace RentAMovies.Models
         public bool Status { get; set; }
         public DateTime DateRented { get; set; }
         public DateTime? DateReturned { get; set; }
+
     }
 }
