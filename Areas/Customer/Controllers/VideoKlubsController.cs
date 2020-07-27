@@ -26,8 +26,12 @@ namespace RentAMovies.Controllers
         // GET: VideoKlubs
         public async Task<IActionResult> Index()
         {
+
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
             var applicationDbContext = _context.VideoKlub.Include(c => c.Customer).Include(m => m.Movie).Include(g => g.Genre);
-            return View(await applicationDbContext.ToListAsync());
+            return View(applicationDbContext);
+
+
         }
 
         // GET: VideoKlubs/Details/5

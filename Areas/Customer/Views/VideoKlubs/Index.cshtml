@@ -55,32 +55,32 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DateCreated)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Customer.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Genre.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Movie.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Status)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DateRented)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DateReturned)
-                        </td>
-                        <td>
-                            <partial name="_TableButtonPartial" model="item.Id" />
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateCreated)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Customer.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Genre.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Movie.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateRented)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateReturned)
+                            </td>
+                            <td>
+                                <partial name="_TableButtonPartial" model="item.Id" />
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
