@@ -9,6 +9,8 @@
 <h2 class="text-info">Item Details</h2>
 <br />
 
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
 <form method="post">
     <div class="border backgroundWhite row">
 
@@ -75,21 +77,21 @@
                     <input asp-for="Movie.NumberAvailable" readonly class="form-control" />
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" hidden>
                 <div class="col-md-4">
-                    <label asp-for="Movie.Price" class="text-info font-weight-bold"></label>
+                    <label asp-for="Movie.Price" class="text-info font-weight-bold" ></label>
                 </div>
                 <div class="col-md-8">
                     <input asp-for="Movie.Price" readonly class="form-control" />
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" hidden>
                 <div class="col-md-4">
-                    <label asp-for="Count" class="text-info font-weight-bold"></label>
+                    <label asp-for="Count" class="text-info font-weight-bold" ></label>
                 </div>
                 <div class="col-md-8">
                     <input asp-for="Count" class="form-control" />
-                    <span asp-validation-for="Count" class="text-danger"></span>
+                    <span asp-validation-for="Count" class="text-danger" ></span>
                 </div>
             </div>
             <div class="form-group row">
@@ -99,7 +101,7 @@
                     <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
                 </div>
                 <div class="col-md-4">
-                    <button type="submit" value="Add to Cart" class="btn btn-primary form-control">Add to Cart</button>
+                    <button type="submit" value="Add to Cart" class="btn btn-primary form-control">Add Movie</button>
                 </div>
             </div>
         </div>

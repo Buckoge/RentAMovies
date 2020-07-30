@@ -24,6 +24,9 @@ namespace RentAMovies.Controllers
         
         private readonly ApplicationDbContext _context;
 
+        [TempData]
+        public string StatusMessage { get; set; }
+
         public HomeController(ApplicationDbContext context)
         {
             _context = context;
@@ -73,6 +76,8 @@ namespace RentAMovies.Controllers
             CartObject.Id = 0;
             //if (ModelState.IsValid)
             {
+                
+
                 var claimsIdentity = (ClaimsIdentity)this.User.Identity;
                 var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
                 CartObject.ApplicationUserId = claim.Value;
@@ -80,12 +85,24 @@ namespace RentAMovies.Controllers
                 ShoppingCart cartFromDb = await _context.ShoppingCart.Where(c => c.ApplicationUserId == CartObject.ApplicationUserId
                                                 && c.MovieId == CartObject.MovieId).FirstOrDefaultAsync();
 
+                //var IsMovieAlreadyExists = _context.ShoppingCart.Include(p => p.Movie).Where(p => p.MovieId == CartObject.MovieId);
+                //var IsMovieAlreadyExists = _context.ShoppingCart.Include(p => p.MovieId).ToListAsync();
+                //if (cartFromDb.MovieId == CartObject.MovieId )
+                //{
+                //    StatusMessage = "Error : Movie is already rented, Please choose another one.";
+                //    // throw new ArgumentException();
+
+                //}
+
+                //else
+
                 if (cartFromDb == null)
                 {
                     await _context.ShoppingCart.AddAsync(CartObject);
                 }
                 else
                 {
+                    
                     cartFromDb.Count = cartFromDb.Count + CartObject.Count;
                 }
                 await _context.SaveChangesAsync();
@@ -95,19 +112,6 @@ namespace RentAMovies.Controllers
 
                 return RedirectToAction("Index");
             }
-            //else
-            //{
-
-            //    var movieFromDb = await _context.Movies.Include(m => m.Genre).Where(m => m.Id == CartObject.MovieId).FirstOrDefaultAsync();
-
-            //    ShoppingCart cartObj = new ShoppingCart()
-            //    {
-            //        Movie = movieFromDb,
-            //        MovieId = movieFromDb.Id
-            //    };
-
-            //    return View(cartObj);
-            //}
         }
 
 

@@ -24,5 +24,7 @@ namespace RentAMovies.Data
         public DbSet<Coupon> Coupon { get; set; }
         public DbSet<OrderHeader> OrderHeader { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
+        public DbSet<RentalHeader> RentalHeader { get; set; }
+        public DbSet<RentalDetails> RentalDetails { get; set; }
     }
 }
