@@ -733,10 +733,12 @@ D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\static
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.dll
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.pdb
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\Razor\Views\Shared\_OrderStatus.cshtml.g.cs
-D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\Razor\Areas\Customer\Views\RentalCart\Index.cshtml.g.cs
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\refs\Microsoft.Extensions.FileProviders.Abstractions.dll
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\refs\Microsoft.Extensions.FileProviders.Embedded.dll
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\refs\Microsoft.Extensions.Logging.Debug.dll
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\refs\System.Text.Json.dll
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.csproj.CoreCompileInputs.cache
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.genruntimeconfig.cache
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\Razor\Areas\Customer\Views\RentalCart\Index.cshtml.g.cs
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\Razor\Areas\Customer\Views\RentalOrder\Confirm.cshtml.g.cs
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\Razor\Views\Shared\_IndividualRentalDetails.cshtml.g.cs
