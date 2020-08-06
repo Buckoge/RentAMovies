@@ -113,6 +113,6 @@ namespace RentAMovies.Areas.Customer.Controllers
 
 
             return RedirectToAction(nameof(Index));
-        }
+        }       
     }
 }
