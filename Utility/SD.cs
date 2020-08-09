@@ -28,6 +28,9 @@ namespace RentAMovies.Utility
         public const string PaymentStatusApproved = "Approved";
         public const string PaymentStatusRejected = "Rejected";
 
+        public const string RentalprocesStatusAcitve = "Active";
+        public const string RentalprocesStatusCompleted = "Completed";
+
 
         public static string ConvertToRawHtml(string source)
         {

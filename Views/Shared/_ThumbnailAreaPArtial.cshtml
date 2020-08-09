@@ -7,7 +7,7 @@
 {
     <div class="col-12 post @Model.FirstOrDefault().Genre.Name.Replace(" ",string.Empty) menu-restaurant">
         <div class="row">
-            <h3 class="text-success"> @Model.FirstOrDefault().Genre.Name </h3>
+            <h3 class="text-info"> @Model.FirstOrDefault().Genre.Name </h3>
         </div>
 
         @foreach (var item in Model)
@@ -19,8 +19,8 @@
                     </div>
                     <div class="col-md-9 col-sm-12">
                         <div class="row pr-3">                            
-                            <div class="col-4 text-right" style="color:maroon">
-                                <h4>$@item.Price</h4>
+                            <div class="col-6 text-left" style="color:maroon">
+                                <h4>@item.Name</h4>
                             </div>
                         </div>
 
@@ -28,8 +28,8 @@
                         <div class="row col-12 text-justify d-none d-md-block">
                             <p>@Html.Raw(item.MovieDescription)</p>
                         </div>
-                        <div class="col-md-3 col-sm-12 offset-md-9 text-center">
-                            <a asp-action="Details" class="btn btn-success form-control" asp-route-id="@item.Id">Details</a>
+                        <div class="col-md-3 col-sm-12 offset-md-9 text-center ">
+                            <a asp-action="Details" class="myButtonBlue form-control text-white" asp-route-id="@item.Id">Details</a>
                         </div>
                     </div>
                 </div>

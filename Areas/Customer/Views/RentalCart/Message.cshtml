@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewData["Title"] = "Message";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <h3>Please first complete your active rental </h3>
+
+
+<input class="myButtonGreen" type="button" value="Go back to rentals" onclick="@("window.location.href='" + @Url.Action("RentalHistory", "RentalOrder") + "'");" />
+

@@ -472,6 +472,62 @@ namespace RentAMovies.Migrations
                     b.ToTable("Rentals");
                 });
 
+            modelBuilder.Entity("RentAMovies.Models.RentalDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RentalHeaderId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("RentalHeaderId");
+
+                    b.ToTable("RentalDetails");
+                });
+
+            modelBuilder.Entity("RentAMovies.Models.RentalHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime?>("RentalComplited")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("RentalDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RentalHeader");
+                });
+
             modelBuilder.Entity("RentAMovies.Models.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
@@ -486,6 +542,9 @@ namespace RentAMovies.Migrations
 
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
+
+                    b.Property<string>("StatusMessage")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -656,6 +715,30 @@ namespace RentAMovies.Migrations
                     b.HasOne("RentAMovies.Models.Movie", "Movie")
                         .WithMany()
                         .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RentAMovies.Models.RentalDetails", b =>
+                {
+                    b.HasOne("RentAMovies.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RentAMovies.Models.RentalHeader", "RentalHeader")
+                        .WithMany()
+                        .HasForeignKey("RentalHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RentAMovies.Models.RentalHeader", b =>
+                {
+                    b.HasOne("RentAMovies.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

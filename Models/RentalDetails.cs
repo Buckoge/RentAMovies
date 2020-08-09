@@ -9,10 +9,10 @@ namespace RentAMovies.Models
 {
     public class RentalDetails
     {
-        public RentalDetails()
-        {
-            Status = true;
-        }
+        //public RentalDetails()
+        //{
+        //    Status = true;
+        //}
 
         [Key]
         public int Id { get; set; }
@@ -28,6 +28,7 @@ namespace RentAMovies.Models
 
         [ForeignKey("MovieId")]
         public virtual Movie Movie { get; set; }
+        public int Count { get; set; }
         public bool Status { get; set; }
     }
 }

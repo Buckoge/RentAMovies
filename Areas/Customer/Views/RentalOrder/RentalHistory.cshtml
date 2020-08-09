@@ -1,0 +1,81 @@
+﻿@model RentAMovies.Models.ViewModels.RentalListViewModel
+@using RentAMovies.Utility
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<br />
+<br />
+<div class="border backgroundWhite">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-info"> Past Rental List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <partial name="_CreateButtonPartial" />
+        </div>
+    </div>
+    <br />
+    <p>
+       You have @Model.Rentals.Count()
+        rentals:
+    </p>
+    <div>
+        @if (Model.Rentals.Count() > 0)
+        {
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        @Html.DisplayNameFor(m => m.Rentals[0].RentalHeader.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Rentals[0].RentalHeader.RentalDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Rentals[0].RentalHeader.ApplicationUser.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Rentals[0].RentalHeader.Status)
+                    </th>
+                    <th>
+                        Total Items
+                    </th>
+                    <th></th>
+
+                </tr>
+                @foreach (var item in Model.Rentals)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.RentalHeader.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.RentalHeader.RentalDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.RentalHeader.ApplicationUser.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.RentalHeader.Status)
+                        </td>
+                        <td>
+                            @item.RentalDetails.Count
+                        </td>
+                        <td>
+                            <a asp-action="GetRentalDetails" asp-route-id="@item.RentalHeader.Id" class="myButtonBlue text-white anchorDetail"><i class="far fa-list-alt"></i> Details</a>
+                            <a asp-action="FinishRental" asp-route-id="@item.RentalHeader.Id" class="myButtonGreen text-white "><i class="fab fa-affiliatetheme"></i> Finis</a>
+                            <a asp-action="DeleteRental" asp-route-id="@item.RentalHeader.Id" class="myButtonRed text-white "><i class="fas fa-trash"></i> Delete</a>
+
+                        </td>
+                    </tr>
+                }
+            </table>
+            <div page-model="@Model.PagingInfo" page-classes-enabled="true" page-class="btn border"
+                 page-class-normal="btn btn-light" page-class-selected="btn btn-info active"
+                 class="btn-group float-right">
+            </div>
+            <br /> }
+        else
+        {
+            <p>No category exists...</p>}
+    </div>
+</div>

@@ -1,0 +1,62 @@
+﻿@model RentAMovies.Models.ViewModels.RentalDetailsCart
+@using Microsoft.Extensions.Options
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <form method="post">
+        @if (Model.listCart2.Count > 0)
+        {
+            <br />
+            <input id="userId" asp-for="@Model.listCart2[0].ApplicationUserId" hidden />
+            <input asp-for="@Model.RentalHeader.RentalDate" hidden />
+            <div class="backgroundWhiteBorder">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header bg-dark text-light ml-0 row container">
+                            <div class="col-6">
+                                <i class="fa fa-video-camera btn-outline-info"></i> &nbsp;
+                                Your rental
+                            </div>
+                            <div class="col-6 text-right">
+                                <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-outline-info btn-sm">Add movie</a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            @foreach (var item in Model.listCart2)
+                            {
+                                <div class="row">
+                                    <div class="d-none d-lg-block col-lg-2 text-center py-2">
+                                        <img src="@item.Movie.Image" class="rounded" width="120" height="120" />
+                                    </div>
+                                    <div class="col-8 text-sm-center col-lg-9 text-lg-right">
+                                        <h4><strong>@item.Movie.Name</strong></h4>
+                                        <h4><small>@item.Movie.MovieDescription</small></h4>
+                                    </div>
+                                    <div class="col-8 text-sm-center col-lg-1 text-lg-right row">
+                                        <div class="col-8 col-sm-4 col-lg-1 text-right">
+                                            <button type="submit" class="btn btn-outline-danger" asp-action="remove" asp-route-cartId="@item.Id">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                            }
+                            
+                        </div>
+                        <div class="card-footer">
+                            <div class="col-12 col-lg-4 offset-lg-8 col-md-6 offset-md-6">
+                                <button type="submit" asp-action="Index" class="myButtonGreen form-control">Finish</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="backgroundWhiteBorder"> No items added to the shopping cart...</div>
+        }
+    </form>
