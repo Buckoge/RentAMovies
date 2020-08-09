@@ -8,13 +8,17 @@
 <div class="border backgroundWhite">
     <div class="row">
         <div class="col-6">
-            <h2 class="text-info"> Past Order List</h2>
+            <h2 class="text-info"> Past Rental List</h2>
         </div>
         <div class="col-6 text-right">
             <partial name="_CreateButtonPartial" />
         </div>
     </div>
     <br />
+    <p>
+       You have @Model.Rentals.Count()
+        rentals:
+    </p>
     <div>
         @if (Model.Rentals.Count() > 0)
         {
@@ -54,7 +58,7 @@
                             @Html.DisplayFor(m => item.RentalHeader.Status)
                         </td>
                         <td>
-                            @Html.DisplayFor(m => item.RentalDetails.Count)
+                            @item.RentalDetails.Count
                         </td>
                         <td>
                             <a asp-action="GetRentalDetails" asp-route-id="@item.RentalHeader.Id" class="myButtonBlue text-white anchorDetail"><i class="far fa-list-alt"></i> Details</a>

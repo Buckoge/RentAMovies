@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RentAMovies.Data;
 using RentAMovies.Extensions;
 using RentAMovies.Migrations;
@@ -49,16 +50,19 @@ namespace RentAMovies.Areas.Customer.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> RentalHistory
-            (int productPage = 1)
+        public async Task<IActionResult> RentalHistory(int productPage = 1)
         {
+            
+
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
 
             RentalListViewModel RentalListVM = new RentalListViewModel()
             {
-                Rentals = new List<RentalDetailsViewModel>()
+                Rentals = new List<RentalDetailsViewModel>(),
+                RentalDetails = new List<RentalDetailsViewModel>()
+                
             };
 
 

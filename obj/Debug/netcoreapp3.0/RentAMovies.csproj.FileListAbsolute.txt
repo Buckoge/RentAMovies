@@ -744,3 +744,4 @@ D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\refs\M
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\refs\System.Text.Json.dll
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.csproj.CoreCompileInputs.cache
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.genruntimeconfig.cache
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\Razor\Areas\Customer\Views\RentalCart\Message.cshtml.g.cs

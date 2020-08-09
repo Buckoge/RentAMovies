@@ -9,5 +9,6 @@ namespace RentAMovies.Models.ViewModels
     {
         public IList<RentalDetailsViewModel> Rentals { get; set; }
         public PagingInfo PagingInfo { get; set; }
+        public List<RentalDetailsViewModel> RentalDetails { get; set; }
     }
 }
