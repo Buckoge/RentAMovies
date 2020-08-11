@@ -618,8 +618,6 @@ D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\runtim
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.AssemblyInfoInputs.cache
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.AssemblyInfo.cs
-D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.MvcApplicationPartsAssemblyInfo.cs
-D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.MvcApplicationPartsAssemblyInfo.cache
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.RazorAssemblyInfo.cache
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.RazorAssemblyInfo.cs
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.TagHelpers.input.cache
@@ -742,6 +740,13 @@ D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\refs\M
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\refs\Microsoft.Extensions.FileProviders.Embedded.dll
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\refs\Microsoft.Extensions.Logging.Debug.dll
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\refs\System.Text.Json.dll
-D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.csproj.CoreCompileInputs.cache
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.genruntimeconfig.cache
 D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\Razor\Areas\Customer\Views\RentalCart\Message.cshtml.g.cs
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Authentication.Facebook.dll
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Authentication.Google.dll
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\Razor\Views\Shared\Components\UserName\Default.cshtml.g.cs
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\SendGrid.dll
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\bin\Debug\netcoreapp3.0\StarkbankEcdsa.dll
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.csproj.CoreCompileInputs.cache
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.MvcApplicationPartsAssemblyInfo.cs
+D:\ucenje\!CSharpProjekti\RentAMovies\RentAMovies\obj\Debug\netcoreapp3.0\RentAMovies.MvcApplicationPartsAssemblyInfo.cache

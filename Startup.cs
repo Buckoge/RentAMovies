@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
 using RentAMovies.Utility;
 using Stripe;
+using RentAMovies.Service;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace RentAMovies
 {
@@ -49,9 +51,17 @@ namespace RentAMovies
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+            services.AddSingleton<IEmailSender, EmailSender>();
+            services.Configure<EmailOptions>(Configuration);
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = "3410602032358009";
+                facebookOptions.AppSecret = "3eeed541d144a3ad41964f815da9f52e";
+            });
 
             services.AddSession(options =>
             {

@@ -15,67 +15,73 @@
         </div>
     </div>
     <br />
-    <p>
-       You have @Model.Rentals.Count()
-        rentals:
-    </p>
+   
     <div>
         @if (Model.Rentals.Count() > 0)
         {
-            <table class="table table-striped border">
-                <tr class="table-secondary">
-                    <th>
+            <table class="table table-responsive-sm table-hover table-bordered">
+                <tr class="table-info">
+                    <th class="text-center">
                         @Html.DisplayNameFor(m => m.Rentals[0].RentalHeader.Id)
                     </th>
-                    <th>
+                    <th class="text-center">
                         @Html.DisplayNameFor(m => m.Rentals[0].RentalHeader.RentalDate)
                     </th>
-                    <th>
+                    <th class="text-center">
                         @Html.DisplayNameFor(m => m.Rentals[0].RentalHeader.ApplicationUser.Email)
                     </th>
-                    <th>
+                    <th class="text-center">
                         @Html.DisplayNameFor(m => m.Rentals[0].RentalHeader.Status)
                     </th>
-                    <th>
+                    <th class="text-center">
                         Total Items
                     </th>
-                    <th></th>
+                    <th class="text-center">Select</th>
 
                 </tr>
                 @foreach (var item in Model.Rentals)
                 {
                     <tr>
-                        <td>
+                        <td class="text-center">
                             @Html.DisplayFor(m => item.RentalHeader.Id)
                         </td>
-                        <td>
+                        <td class="text-center">
                             @Html.DisplayFor(m => item.RentalHeader.RentalDate)
                         </td>
-                        <td>
+                        <td class="text-center">
                             @Html.DisplayFor(m => item.RentalHeader.ApplicationUser.Email)
                         </td>
-                        <td>
-                            @Html.DisplayFor(m => item.RentalHeader.Status)
-                        </td>
-                        <td>
-                            @item.RentalDetails.Count
-                        </td>
-                        <td>
-                            <a asp-action="GetRentalDetails" asp-route-id="@item.RentalHeader.Id" class="myButtonBlue text-white anchorDetail"><i class="far fa-list-alt"></i> Details</a>
-                            <a asp-action="FinishRental" asp-route-id="@item.RentalHeader.Id" class="myButtonGreen text-white "><i class="fab fa-affiliatetheme"></i> Finis</a>
-                            <a asp-action="DeleteRental" asp-route-id="@item.RentalHeader.Id" class="myButtonRed text-white "><i class="fas fa-trash"></i> Delete</a>
+                        @if (item.RentalHeader.Status == SD.RentalprocesStatusCompleted)
+                        {
+                            <td class="text-center text-success">
+                                @Html.DisplayFor(m => item.RentalHeader.Status)
+                            </td>
+                        }
+                        @if (item.RentalHeader.Status == SD.RentalprocesStatusAcitve)
+                        {
+                    <td class="text-center text-danger">
+                        @Html.DisplayFor(m => item.RentalHeader.Status)
+                    </td>
+                        }
+                    <td class="text-center">
+                        @Html.DisplayFor(m => item.RentalDetails.Count)
+                    </td>
+                        <td class="text-center">
+                            <a asp-action="GetRentalDetails" asp-route-id="@item.RentalHeader.Id" class="myButtonBlue text-white anchorDetail"><i class="far fa-list-alt"></i> </a>
+                            <a asp-action="FinishRental" asp-route-id="@item.RentalHeader.Id" class="myButtonGreen text-white "><i class="fa fa-check"></i> </a>
+                            <a asp-action="DeleteRental" asp-route-id="@item.RentalHeader.Id" class="myButtonRed text-white "><i class="fas fa-trash"></i> </a>
 
                         </td>
                     </tr>
                 }
             </table>
             <div page-model="@Model.PagingInfo" page-classes-enabled="true" page-class="btn border"
-                 page-class-normal="btn btn-light" page-class-selected="btn btn-info active"
+                 page-class-normal="btn btn-light" page-class-selected="btn myButtonBlue text-white active"
                  class="btn-group float-right">
             </div>
             <br /> }
         else
         {
-            <p>No category exists...</p>}
+            <p>No rentals exists...</p>}
     </div>
 </div>
