@@ -23,7 +23,8 @@ namespace RentAMovies.Models
         public DateTime ReleaseDate { get; set; }
         public int NumberInStock { get; set; }
         public int NumberAvailable { get; set; }
-        public string? Image { get; set; }
+        public string Image { get; set; }
+        public string Image2 { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = " Price should be greater than ${1}")]
         public double Price { get; set; }

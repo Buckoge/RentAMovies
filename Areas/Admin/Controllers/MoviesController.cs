@@ -89,14 +89,14 @@ namespace RentAMovies.Controllers
                 {
                     files[0].CopyTo(filesStream);
                 }
-                movieItemFromDb.Image = @"\images\" + movie.Id + extension;
+                movieItemFromDb.Image2 = @"\images\" + movie.Id + extension;
             }
             else
             {
                 //no file was uploaded, so use default
                 var uploads = Path.Combine(webRootPath, @"images\" + SD.DefaultFoodImage);
                 System.IO.File.Copy(uploads, webRootPath + @"\images\" + movie.Id + ".jpg");
-                movieItemFromDb.Image = @"\images\" + movie.Id + ".jpg";
+                movieItemFromDb.Image2 = @"\images\" + movie.Id + ".jpg";
             }
 
             await _context.SaveChangesAsync();
@@ -166,7 +166,7 @@ namespace RentAMovies.Controllers
                         {
                             files[0].CopyTo(filesStream);
                         }
-                        movieItemFromDb.Image = @"\images\" + movie.Id + extension_new;
+                        movieItemFromDb.Image2 = @"\images\" + movie.Id + extension_new;
                     }
 
 
