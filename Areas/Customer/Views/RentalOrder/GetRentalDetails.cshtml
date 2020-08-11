@@ -17,31 +17,31 @@
             </div>
             <br />
             <div>
-                <table class="table table-striped border">
-                    <tr class="table-secondary">
-                    <thead>
+                <table class="table table-responsive-sm table-hover table-bordered">
+                    <tr>
+                    <thead class="table-info">
                         <tr>
-                            <th>
+                            <th class="text-center">
                                 @Html.DisplayNameFor(model => model.RentalDetails1.Movie.Name)
                             </th>
-                            <th>
+                            <th class="text-center">
                                 @Html.DisplayNameFor(model => model.RentalDetails1.Status)
                             </th>
-                            <th></th>
+                            <th class="text-center">Add od Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.RentalDetails)
                         {
                         <tr>
-                            <td>
+                            <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.Movie.Name)
                             </td>
-                            <td>
+                            <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.Status)
                             </td>
                             <td>
-                                <div class="col-11 col-sm-4 col-lg-11">
+                                <div class="col-8 col-sm-4 col-lg-8">
                                     <div class="float-right mx-1">
                                         <button type="submit" class="btn btn-outline-info" asp-action="minus" asp-route-Id="@item.Id" asp-route-rentalId="@Model.RentalHeader.Id">
                                             <i class="fas fa-minus"></i>

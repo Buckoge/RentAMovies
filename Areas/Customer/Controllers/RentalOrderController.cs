@@ -5,6 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.CodeAnalysis.CSharp;
@@ -27,11 +28,13 @@ namespace RentAMovies.Areas.Customer.Controllers
         public RentalDetailsViewModel rentalstatus { get; set; }
 
         private readonly ApplicationDbContext _db;
-        private int PageSize = 10;
+        private int PageSize = 5;
+        private readonly IEmailSender _emailSender;
 
-        public RentalOrderController(ApplicationDbContext db)
+        public RentalOrderController(ApplicationDbContext db, IEmailSender emailSender)
         {
             _db = db;
+            _emailSender = emailSender;
         }
 
         [Authorize]
@@ -58,13 +61,12 @@ namespace RentAMovies.Areas.Customer.Controllers
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
 
-            RentalListViewModel RentalListVM = new RentalListViewModel()
+            RentalListViewModel rentalListVM = new RentalListViewModel()
             {
                 Rentals = new List<RentalDetailsViewModel>(),
                 RentalDetails = new List<RentalDetailsViewModel>()
                 
             };
-
 
 
             List<RentalHeader> RentalHeaderList = await _db.RentalHeader.Include(o => o.ApplicationUser).Where(u => u.UserId == claim.Value).ToListAsync();
@@ -74,17 +76,18 @@ namespace RentAMovies.Areas.Customer.Controllers
                 RentalDetailsViewModel individual = new RentalDetailsViewModel
                 {
                     RentalHeader = item,
-                    RentalDetails = await _db.RentalDetails.Where(o => o.Id == item.Id).ToListAsync()
+                    RentalDetails = await _db.RentalDetails.Include(m => m.Movie).Where(o => o.RentalHeaderId == item.Id).ToListAsync()
+                    
                 };
-                RentalListVM.Rentals.Add(individual);
+                rentalListVM.Rentals.Add(individual);
             }
-
-            var count = RentalListVM.Rentals.Count;
-            RentalListVM.Rentals = RentalListVM.Rentals.OrderByDescending(p => p.RentalHeader.Id)
+            
+            var count = rentalListVM.Rentals.Count;
+            rentalListVM.Rentals = rentalListVM.Rentals.OrderByDescending(p => p.RentalHeader.Id)
                                  .Skip((productPage - 1) * PageSize)
                                  .Take(PageSize).ToList();
 
-            RentalListVM.PagingInfo = new PagingInfo
+            rentalListVM.PagingInfo = new PagingInfo
             {
                 CurrentPage = productPage,
                 ItemsPerPage = PageSize,
@@ -92,7 +95,7 @@ namespace RentAMovies.Areas.Customer.Controllers
                 urlParam = "/Customer/RentalOrder/RentalHistory?productPage=:"
             };
 
-            return View(RentalListVM);
+            return View(rentalListVM);
         }
 
         public async Task<IActionResult> GetRentalDetails(int Id)
@@ -108,9 +111,12 @@ namespace RentAMovies.Areas.Customer.Controllers
 
         public async Task<IActionResult> FinishRental(int Id)
         {
+            RentalHeader rentalHeader = await _db.RentalHeader.FindAsync(Id);
             var FinishRental = await _db.RentalHeader.FirstOrDefaultAsync(c => c.Id == Id);
             FinishRental.Status = SD.RentalprocesStatusCompleted;
             await _db.SaveChangesAsync();
+
+            await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == rentalHeader.UserId).FirstOrDefault().Email, "RentAMovie - Rental finish " + rentalHeader.Id.ToString(), "Rental has been comleted successfully.");
             return RedirectToAction("RentalHistory");
         }
 

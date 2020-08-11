@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -19,13 +20,15 @@ namespace RentAMovies.Areas.Customer.Controllers
     public class RentalCartController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IEmailSender _emailSender;
 
         [BindProperty]
         public RentalDetailsCart detailCart { get; set; }
 
-        public RentalCartController(ApplicationDbContext context)
+        public RentalCartController(ApplicationDbContext context, IEmailSender emailSender)
         {
             _context = context;
+            _emailSender = emailSender;
         }
         public async Task<IActionResult> Index()
         {
@@ -98,16 +101,21 @@ namespace RentAMovies.Areas.Customer.Controllers
                         MovieId = item.MovieId,
                         RentalHeaderId = detailCart.RentalHeader.Id,
                         Status = true,
+                        Count = detailCart.listCart2.Count()
                     };
 
                     _context.RentalDetails.Add(RentalDetails);
 
                 }
-
+                await _emailSender.SendEmailAsync(_context.Users.Where(u => u.Id == claim.Value).FirstOrDefault().Email, "RentAMovie - Rental created" + detailCart.RentalHeader.Id.ToString(), "Rental has been submitted successfully.");
 
                 _context.ShoppingCart.RemoveRange(detailCart.listCart2);
                 HttpContext.Session.SetInt32(SD.ssShoppingCartCount, 0);
                 await _context.SaveChangesAsync();
+
+                
+
+
                 //return RedirectToAction("Index", "Home");
                 return RedirectToAction("Confirm", "RentalOrder", new { id = detailCart.RentalHeader.Id });
             }
