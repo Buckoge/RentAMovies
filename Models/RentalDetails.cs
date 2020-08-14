@@ -18,6 +18,12 @@ namespace RentAMovies.Models
         public int Id { get; set; }
 
         [Required]
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
+        [Required]
         public int RentalHeaderId { get; set; }
 
         [ForeignKey("RentalHeaderId")]

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using RentAMovies.Data;
 using RentAMovies.Migrations;
@@ -57,12 +58,24 @@ namespace RentAMovies.Controllers
         [Authorize]
         public async Task<IActionResult> Details(int id)
         {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            var rentedMovie = await _context.RentalHeader.Where(u => u.UserId == claim.Value).ToListAsync();
+           
+
+
+            //List<RentalDetails> filterdMovies = await _context.RentalDetails.Where(r => r.RentalHeaderId = filterHeader.).ToListAsync();
+
+
             var MovieFromDb = await _context.Movies.Include(m => m.Genre).Where(m => m.Id == id).FirstOrDefaultAsync();
 
             ShoppingCart cartObj = new ShoppingCart()
             {
                 Movie = MovieFromDb,
-                MovieId = MovieFromDb.Id
+                MovieId = MovieFromDb.Id,
+                Count= rentedMovie.Count()
+
             };
 
             return View(cartObj);
